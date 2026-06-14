@@ -51,33 +51,33 @@
 ## Phase 1 — Authentication System (Weeks 1–2)
 
 ### 1.1 Auth Helpers
-- [ ] Create `includes/auth.php` — `isLoggedIn()`, `requireRole()`, `getCurrentUser()`, `loginUser()`, `logoutUser()`, `session_regenerate_id()` after login
+- [x] Create `includes/auth.php` — `isLoggedIn()`, `requireRole()`, `getCurrentUser()`, `loginUser()`, `logoutUser()`, `session_regenerate_id()` after login
 
 ### 1.2 Registration
-- [ ] Create `register.php` — form fields: full_name, phone, email, password+confirm, role radio (donor/beneficiary)
-- [ ] Add governorate dropdown → cascading district dropdown (JavaScript)
-- [ ] Implement server-side validation: name 3–100 chars, phone Yemeni format, email unique, password ≥ 8 chars + 1 number
-- [ ] Hash password with `password_hash(PASSWORD_BCRYPT)`
-- [ ] Insert user into `users` table, redirect to login on success
+- [x] Create `register.php` — form fields: full_name, phone, email, password+confirm, role radio (donor/beneficiary)
+- [x] Add governorate dropdown → cascading district dropdown (JavaScript)
+- [x] Implement server-side validation: name 3–100 chars, phone Yemeni format, email unique, password ≥ 8 chars + 1 number
+- [x] Hash password with `password_hash(PASSWORD_BCRYPT)`
+- [x] Insert user into `users` table, redirect to login on success
 
 ### 1.3 Login
-- [ ] Create `login.php` — email + password form
-- [ ] Implement `password_verify()` check
-- [ ] Regenerate session ID on successful login
-- [ ] Role-based redirect: beneficiary → `marketplace.php`, donor → `dashboard-donor.php`, admin → `admin/index.php`
+- [x] Create `login.php` — email + password form
+- [x] Implement `password_verify()` check
+- [x] Regenerate session ID on successful login
+- [x] Role-based redirect: beneficiary → `marketplace.php`, donor → `dashboard-donor.php`, admin → `admin/index.php`
 
 ### 1.4 Logout
-- [ ] Create `logout.php` — destroy session, redirect to `login.php` with message
+- [x] Create `logout.php` — destroy session, redirect to `login.php` with message
 
 ### 1.5 CSRF Protection
-- [ ] Generate CSRF token in session on GET requests
-- [ ] Validate CSRF token on all POST requests
-- [ ] Reject mismatched / expired tokens with error message
+- [x] Generate CSRF token in session on GET requests
+- [x] Validate CSRF token on all POST requests
+- [x] Reject mismatched / expired tokens with error message
 
 ### 1.6 Role Guards
-- [ ] Add `requireRole('donor')` guard to donor-only pages
-- [ ] Add `requireRole('admin')` guard to admin-only pages
-- [ ] Redirect unauthorized users to `login.php?error=unauthorized`
+- [x] Add `requireRole('donor')` guard to donor-only pages
+- [x] Add `requireRole('admin')` guard to admin-only pages
+- [x] Redirect unauthorized users to `login.php?error=unauthorized`
 - [ ] **Verify:** Register as donor → login → redirected to donor dashboard. Register as beneficiary → login → redirected to marketplace. Access admin page as non-admin → redirected to login with error. Logout → session destroyed.
 
 ---

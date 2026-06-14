@@ -76,3 +76,56 @@ function jsonResponse(array $data, int $statusCode = 200): void {
     echo json_encode($data);
     exit;
 }
+
+function getYemenGovernorates(): array {
+    return [
+        'amanat_al_asimah' => 'أمانة العاصمة',
+        'aden'             => 'عدن',
+        'taiz'             => 'تعز',
+        'al_hudaydah'      => 'الحديدة',
+        'hadramawt'        => 'حضرموت',
+        'dhamar'           => 'ذمار',
+        'shabwah'          => 'شبوة',
+        'al_mahwit'        => 'المحويت',
+        'saada'            => 'صعدة',
+        'hajjah'           => 'حجة',
+        'ibb'              => 'إب',
+        'lahij'            => 'لحج',
+        'marib'            => 'مأرب',
+        'ad_dali'          => 'الضالع',
+        'amran'            => 'عمران',
+        'al_bayda'         => 'البيضاء',
+        'al_mahrah'        => 'المهرة',
+        'raymah'           => 'ريمة',
+        'al_jawf'          => 'الجوف',
+        'socotra'          => 'سقطرى',
+        'abyan'            => 'أبين',
+    ];
+}
+
+function getDistricts(string $governorateKey): array {
+    switch ($governorateKey) {
+        case 'amanat_al_asimah': return ['الصافية', 'التحرير', 'الثورة', 'شعوب'];
+        case 'aden':             return ['خور مكسر', 'المعلا', 'كريتر', 'المنصورة'];
+        case 'taiz':             return ['المظفر', 'القاهرة', 'المعافر', 'صبر الموادم'];
+        case 'al_hudaydah':      return ['الحالي', 'الميناء', 'التحيتا', 'الخوخة'];
+        case 'hadramawt':        return ['السيئون', 'المكلا', 'تريم', 'القطن'];
+        case 'dhamar':           return ['مدينة ذمار', 'عتمة', 'ميفعة عنس', 'ضوران'];
+        case 'shabwah':          return ['عتق', 'ميفعة', 'عرماء', 'حبان'];
+        case 'al_mahwit':        return ['مدينة المحويت', 'الخبت', 'حفاش', 'بني سعد'];
+        case 'saada':            return ['مدينة صعدة', 'حيدان', 'سحار', 'ظاهر'];
+        case 'hajjah':           return ['مدينة حجة', 'بني قيس', 'أفلح', 'الجمعة'];
+        case 'ibb':              return ['مدينة إب', 'السياني', 'الرضمة', 'يريم'];
+        case 'lahij':            return ['الحوطة', 'تبن', 'المقاطرة', 'المضاربة'];
+        case 'marib':            return ['مدينة مأرب', 'الوادي', 'حريب', 'الجوبة'];
+        case 'ad_dali':          return ['مدينة الضالع', 'قعطبة', 'الحشاء', 'الشعيب'];
+        case 'amran':            return ['مدينة عمران', 'ذيبين', 'شهارة', 'حوث'];
+        case 'al_bayda':         return ['مدينة البيضاء', 'البيضاء', 'ذي ناعم', 'ناطع'];
+        case 'al_mahrah':        return ['الغيضة', 'حوف', 'شحن', 'المسيلة'];
+        case 'raymah':           return ['مدينة ريمة', 'الجعفرية', 'بلاد الطعام', 'مور'];
+        case 'al_jawf':          return ['الحزم', 'المطمة', 'خب والشعف', 'الغيل'];
+        case 'socotra':          return ['حديبو', 'قلنسية', 'عبد الكوري'];
+        case 'abyan':            return ['زنجبار', 'خنفر', 'الوضيع', 'مودية'];
+        default:                 return [];
+    }
+}
