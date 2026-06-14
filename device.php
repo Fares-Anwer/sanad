@@ -257,7 +257,7 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
 
       <div class="mb-4">
         <label class="block text-sm font-semibold text-text-dark mb-1">تقرير طبي</label>
-        <input type="file" id="medical_report" name="medical_report" accept=".jpg,.jpeg,.png,.pdf" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white file:ml-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-white file:font-semibold file:cursor-pointer file:hover:bg-primary-dark">
+        <input type="file" id="medical_doc" name="medical_doc" accept=".jpg,.jpeg,.png,.pdf" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white file:ml-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-white file:font-semibold file:cursor-pointer file:hover:bg-primary-dark">
         <p class="text-xs text-text-muted mt-1">يرجى رفع تقرير طبي يوضح حالتك الصحية</p>
       </div>
 

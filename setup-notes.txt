@@ -1,0 +1,258 @@
+================================================================================
+                       سند (Sanad) — Setup Notes
+================================================================================
+Version: 1.0.0
+Last Updated: 2025
+
+This document covers PHP.ini configuration, XAMPP/WAMP installation steps,
+database setup, Google Maps API key configuration, file upload directory
+permissions, and common troubleshooting.
+
+================================================================================
+1. PHP.ini REQUIREMENTS
+================================================================================
+
+The following PHP.ini values must be set (or exceeded) for the platform to
+function correctly, especially for file uploads and form processing.
+
++-------------------------+----------------+----------------------------------+
+| DIRECTIVE               | MINIMUM VALUE  | REASON                           |
++-------------------------+----------------+----------------------------------+
+| upload_max_filesize     | 10M            | Medical reports + device photos  |
+| post_max_size           | 12M            | Must exceed upload_max_filesize  |
+| max_execution_time      | 120            | File uploads + DB operations     |
+| max_input_time          | 120            | Large form submissions           |
+| memory_limit            | 128M           | Image processing + PDO queries   |
++-------------------------+----------------+----------------------------------+
+
+Location of php.ini:
+  - XAMPP: C:\xamppl\php\php.ini
+  - WAMP:  C:\wamp64\bin\php\php[version]\php.ini
+
+After editing php.ini, restart Apache via XAMPP/WAMP control panel.
+
+Verify settings: Create a phpinfo.php file in the web root with
+<?php phpinfo(); ?> and check the "Loaded Configuration File" path.
+
+================================================================================
+2. XAMPP/WAMP SETUP STEPS
+================================================================================
+
+Step 2.1 — Install XAMPP or WAMP
+  - Download XAMPP from https://www.apachefriends.org/
+  - Download WAMP from https://www.wampserver.com/
+  - Run installer with default options
+
+Step 2.2 — Start Apache + MySQL
+  - XAMPP Control Panel → Start Apache → Start MySQL
+  - WAMP → Left-click tray icon → Start all services
+  - Verify: Open browser to http://localhost/ — should show dashboard
+
+Step 2.3 — Copy Project to htdocs
+  - Copy the entire /sanad/ folder into:
+    - XAMPP: C:\xamppl\htdocs\sanad\
+    - WAMP:  C:\wamp64\www\sanad\
+  - Verify: Open browser to http://localhost/sanad/
+
+Step 2.4 (Optional) — Configure Virtual Host
+  XAMPP — Edit C:\xamppl\apache\conf\extra\httpd-vhosts.conf:
+    <VirtualHost *:80>
+        DocumentRoot "C:/xamppl/htdocs/sanad"
+        ServerName sanad.local
+    </VirtualHost>
+
+  WAMP — Edit C:\wamp64\bin\apache\apache[version]\conf\extra\httpd-vhosts.conf
+  (similar to above).
+
+  Then edit C:\Windows\System32\drivers\etc\hosts:
+    127.0.0.1  sanad.local
+
+  Restart Apache. Access via http://sanad.local/
+
+  NOTE: Without virtual host, the project works fine at
+  http://localhost/sanad/. Virtual host is optional.
+
+================================================================================
+3. DATABASE CONFIGURATION
+================================================================================
+
+Step 3.1 — Edit includes/config.php
+
+  The file is located at: sanad/includes/config.php
+
+  Default XAMPP/WAMP credentials (change if your setup is different):
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');          // Empty for XAMPP
+    define('DB_NAME', 'sanad_db');
+
+  For WAMP with password:
+    define('DB_PASS', 'your_password_here');
+
+Step 3.2 — Auto-Setup Mechanism
+
+  NO manual database import is required. On every page request,
+  includes/db.php automatically:
+
+    1. Connects to MySQL with no database selected
+    2. Runs: CREATE DATABASE IF NOT EXISTS sanad_db
+    3. Runs: USE sanad_db
+    4. Creates all 4 tables via CREATE TABLE IF NOT EXISTS:
+       - users
+       - devices
+       - device_photos
+       - requests
+
+  If the database already exists with all tables, these queries are no-ops
+  and have zero performance impact.
+
+Step 3.3 — Verify Connection
+
+  Simply load any page (e.g. http://localhost/sanad/). If you see the
+  homepage, the database is connected. If you see an error, check:
+  - MySQL service is running
+  - DB_HOST, DB_USER, DB_PASS in config.php match your MySQL credentials
+  - No MySQL port conflicts (default: 3306)
+
+================================================================================
+4. GOOGLE MAPS API KEY
+================================================================================
+
+The platform uses Google Maps JavaScript API for:
+  - Interactive map picker on add-device.php (donor pins device location)
+  - Embedded map display on device.php (device detail page)
+
+Step 4.1 — Obtain API Key
+  1. Go to https://console.cloud.google.com/
+  2. Create a new project (or select existing)
+  3. Navigate to APIs & Services → Library
+  4. Search for and enable "Maps JavaScript API"
+  5. Go to APIs & Services → Credentials
+  6. Click "Create Credentials" → "API Key"
+  7. Copy the generated key
+
+Step 4.2 — Restrict API Key (Recommended)
+  Under "Application restrictions" → "HTTP referrers (web sites)":
+    - localhost/*
+    - *.sanad.local/*
+    - your-production-domain.com/*
+
+  Under "API restrictions" → "Restrict key":
+    - Select "Maps JavaScript API"
+
+Step 4.3 — Paste Key in config.php
+  In includes/config.php, set:
+    define('GOOGLE_MAPS_API_KEY', 'YOUR_API_KEY_HERE');
+
+Step 4.4 — Static Fallback
+  If no API key is configured, the platform gracefully falls back to a
+  static map image at assets/images/map-fallback.png. Coordinates are
+  displayed as text for reference.
+
+================================================================================
+5. FILE UPLOAD DIRECTORY
+================================================================================
+
+5.1 — Device Photos Directory
+  Path: sanad/uploads/devices/
+  Permissions: Must be writable by the web server.
+    - XAMPP: Already writable (Apache runs as user with full access)
+    - If uploads fail: Right-click uploads/devices/ → Properties → Security
+      → Ensure "IUSR" or "Everyone" has Write permission
+
+  Public access: Allowed (device photos are displayed on marketplace)
+
+5.2 — Medical Reports Directory
+  Path: sanad/uploads/medical-reports/
+  Permissions: Must be writable by the web server.
+  PROTECTED: Directory contains a .htaccess file:
+    Deny from all
+    Require all denied
+
+  Medical documents are NEVER served via direct URL. They are accessed
+  exclusively through an authenticated PHP endpoint that checks:
+    - User is logged in
+    - User has admin role
+
+5.3 — Create Directories (if missing)
+  If the uploads directory structure does not exist, create it:
+    sanad/
+    └── uploads/
+        ├── devices/           (public — device photos)
+        └── medical-reports/   (protected — medical documents)
+
+================================================================================
+6. TROUBLESHOOTING
+================================================================================
+
+PROBLEM: White screen / blank page on all pages
+  CAUSE:  PHP fatal error, error display disabled
+  FIX:
+    1. Open php.ini
+    2. Set: display_errors = On
+    3. Set: error_reporting = E_ALL
+    4. Restart Apache
+    5. Reload page — error message will appear
+    6. Common causes: missing extensions (pdo_mysql), syntax errors
+
+PROBLEM: "Database connection failed" error
+  CAUSE:  MySQL not running or wrong credentials
+  FIX:
+    1. Verify MySQL is running: XAMPP/WAMP control panel shows green
+    2. Click "MySQL" → check port (default: 3306)
+    3. In config.php, verify DB_HOST, DB_USER, DB_PASS
+    4. Try connecting via command line:
+         mysql -u root -p
+       (press Enter for blank password in XAMPP)
+    5. If MySQL runs on non-standard port, add port to DSN in db.php:
+         "mysql:host=localhost;port=3307"
+
+PROBLEM: File upload fails (no error message)
+  CAUSE:  File exceeds upload_max_filesize or post_max_size
+  FIX:
+    1. Check php.ini values (see Section 1)
+    2. upload_max_filesize must be ≥ 10M
+    3. post_max_size must be ≥ upload_max_filesize + 2M (min 12M)
+    4. Restart Apache after changes
+    5. Try uploading a smaller file (< 1MB) to isolate issue
+
+PROBLEM: File upload fails with "Invalid file type" error
+  CAUSE:  File extension not in whitelist
+  FIX:
+    1. Allowed extensions: jpg, jpeg, png, webp, pdf
+    2. Check that MIME type matches extension (finfo_file() validates)
+    3. Renaming .jpg to .jpeg will not bypass MIME check
+
+PROBLEM: "419 Session expired" or CSRF token error
+  CAUSE:  Session expired or token mismatch
+  FIX:
+    1. Default token lifetime: 7200 seconds (2 hours) — see config.php
+    2. Increase: define('CSRF_TOKEN_LIFETIME', 14400);
+    3. Clear browser cookies and session data, re-login
+
+PROBLEM: Google Maps not showing
+  CAUSE:  Missing or invalid API key
+  FIX:
+    1. Verify GOOGLE_MAPS_API_KEY is set in config.php
+    2. Verify "Maps JavaScript API" is enabled in Google Cloud Console
+    3. Check HTTP referrer restrictions (localhost must be allowed)
+    4. Fallback: Static map image displays without key
+
+PROBLEM: 404 Not Found on admin pages
+  CAUSE:  Missing /admin/ subdirectory or incorrect URL
+  FIX:
+    1. Verify the folder sanad/admin/ exists with: index.php, listings.php,
+       requests.php, users.php, action.php
+    2. Access via: http://localhost/sanad/admin/index.php
+    3. Ensure you are logged in with admin role
+
+PROBLEM: Registration fails, "Email already exists"
+  CAUSE:  Duplicate email in database (UNIQUE constraint)
+  FIX:
+    1. Use a different email address
+    2. Or delete existing user manually via phpMyAdmin:
+       DELETE FROM users WHERE email = 'existing@email.com';
+
+================================================================================
+END OF SETUP NOTES
+================================================================================

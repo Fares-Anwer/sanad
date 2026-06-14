@@ -428,6 +428,7 @@ if (isset($_SESSION['add_device_success'])) {
   });
 </script>
 <script src="assets/js/main.js"></script>
+<script>var GOOGLE_MAPS_API_KEY = '<?= GOOGLE_MAPS_API_KEY ?>';</script>
 <script src="assets/js/maps.js"></script>
 <script src="assets/js/validation.js"></script>
 </body>

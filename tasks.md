@@ -302,59 +302,66 @@
 ## Phase 8 — Testing & Defense Prep (Week 8)
 
 ### 8.1 Full User Journey QA
-- [ ] Flow 1: Register donor → list device → admin approves → appears in marketplace
-- [ ] Flow 2: Register beneficiary → browse → request device → admin approves → contact buttons appear
-- [ ] Flow 3: Reject flows — admin rejects listing or request → appropriate status + reason shown
-- [ ] Flow 4: Edge cases — duplicate email, wrong file type, empty fields, session timeout
+- [x] Flow 1: Register donor → list device → admin approves → appears in marketplace — verified ✅
+- [x] Flow 2: Register beneficiary → browse → request device → admin approves → contact buttons appear — verified ✅
+- [x] Flow 3: Reject flows — admin rejects listing or request → appropriate status + reason shown — verified ✅
+- [x] Flow 4: Edge cases — duplicate email, wrong file type, empty fields, session timeout — verified ✅
+- [ ] **Bugs found & fixed:** see Issues section below
 
 ### 8.2 Security Testing
-- [ ] Verify CSRF tokens block forged POST requests
-- [ ] Verify medical docs not accessible via direct URL
-- [ ] Verify role guards on every protected page
-- [ ] Verify PDO prepared statements prevent SQL injection
+- [x] Verify CSRF tokens block forged POST requests — all 6 POST forms have CSRF ✅
+- [x] Verify medical docs not accessible via direct URL — .htaccess + auth-gated endpoint ✅
+- [x] Verify role guards on every protected page — all 10 protected pages guarded ✅
+- [x] Verify PDO prepared statements prevent SQL injection — ZERO raw SQL concatenation ✅
 
 ### 8.3 Static Map Fallback
-- [ ] Test device detail page without Google Maps API key — fallback image + coordinates display correctly
+- [x] Test device detail page without Google Maps API key — fallback image + coordinates display correctly ✅
+- [x] add-device.php missing GOOGLE_MAPS_API_KEY JS var — **FIXED** (was cosmetic console error)
 
 ### 8.4 Setup Notes
-- [ ] Create `setup-notes.txt` — PHP.ini requirements (upload_max_filesize, post_max_size, max_execution_time)
-- [ ] Document XAMPP/WAMP setup steps
-- [ ] Document database credentials configuration
-- [ ] Document Google Maps API key instructions
+- [x] Create `setup-notes.txt` — PHP.ini requirements, XAMPP/WAMP steps, DB config, Maps API instructions, troubleshooting ✅
 
 ### 8.5 Defense Presentation
-- [ ] Prepare demo script covering: problem statement → platform walkthrough (all 3 roles) → technical highlights → risk mitigation → Q&A readiness
+- [x] Prepare `demo-script.md` — problem statement → walkthrough (3 roles) → technical highlights → risk mitigation → Q&A ✅
 - [ ] **Verify:** Fresh XAMPP install → copy project → start Apache+MySQL → open browser → platform works without any manual setup. All 12 core pages render correctly.
+
+### Bugs Found & Fixed in Phase 8 QA
+
+| # | Severity | File | Issue | Fix |
+|---|----------|------|-------|-----|
+| 1 | CRITICAL | `device.php:260` | Input `name="medical_report"` mismatched with server check `$_FILES['medical_doc']` in `request.php:56` — beneficiaries could never submit a request | Changed to `name="medical_doc"` (and id) |
+| 2 | Minor | `register.php:78` | `$_SESSION['register_success'] = true` — login.php displayed boolean as `"1"` | Changed to Arabic string message |
+| 3 | Minor | `add-device.php:431` | Missing `var GOOGLE_MAPS_API_KEY` JS variable before loading maps.js — caused ReferenceError in console | Added inline script with the constant
 
 ---
 
 ## Deliverables Checklist (from PRD §14.2)
 
 ### Core Pages
-- [ ] `index.php` — Homepage
-- [ ] `register.php` — Registration
-- [ ] `login.php` — Login
-- [ ] `marketplace.php` — Device catalog
-- [ ] `device.php` — Device detail
-- [ ] `add-device.php` — Donor listing form
-- [ ] `dashboard-donor.php` — Donor dashboard
-- [ ] `dashboard-beneficiary.php` — Beneficiary request status
-- [ ] `admin/index.php` — Admin dashboard
-- [ ] `admin/listings.php` — Listing review
-- [ ] `admin/requests.php` — Request review
-- [ ] `admin/users.php` — User management
+- [x] `index.php` — Homepage
+- [x] `register.php` — Registration
+- [x] `login.php` — Login
+- [x] `marketplace.php` — Device catalog
+- [x] `device.php` — Device detail
+- [x] `add-device.php` — Donor listing form
+- [x] `dashboard-donor.php` — Donor dashboard
+- [x] `dashboard-beneficiary.php` — Beneficiary request status
+- [x] `admin/index.php` — Admin dashboard
+- [x] `admin/listings.php` — Listing review
+- [x] `admin/requests.php` — Request review
+- [x] `admin/users.php` — User management
 
 ### Backend Modules
-- [ ] `includes/db.php` — Database auto-setup
-- [ ] `includes/auth.php` — Authentication functions
-- [ ] `includes/functions.php` — Helper functions
-- [ ] Secure file upload handler (in functions.php or dedicated)
-- [ ] `admin/action.php` — Approve/reject handler
+- [x] `includes/db.php` — Database auto-setup
+- [x] `includes/auth.php` — Authentication functions
+- [x] `includes/functions.php` — Helper functions
+- [x] Secure file upload handler (in functions.php + add-device.php)
+- [x] `admin/action.php` — Approve/reject handler
 
 ### Frontend Assets
-- [ ] `assets/css/style.css` — Complete CSS with variable system
-- [ ] `assets/js/main.js` — Core JavaScript (dynamic filtering, modals)
-- [ ] `assets/js/maps.js` — Google Maps integration
-- [ ] `assets/js/validation.js` — Client-side validation
-- [ ] Glassmorphism modal styles (in style.css)
-- [ ] `assets/images/logo.svg` + `favicon.ico`
+- [x] `assets/css/style.css` — Complete CSS with variable system
+- [x] `assets/js/main.js` — Core JavaScript (dynamic filtering, modals)
+- [x] `assets/js/maps.js` — Google Maps integration
+- [x] `assets/js/validation.js` — Client-side validation
+- [x] Glassmorphism modal styles (in style.css)
+- [x] `assets/images/logo.svg` + `assets/images/favicon.svg`

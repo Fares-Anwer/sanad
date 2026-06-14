@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $password_hash = password_hash($password, PASSWORD_BCRYPT);
             $stmt = $pdo->prepare('INSERT INTO users (full_name, phone, email, password_hash, role, governorate, district) VALUES (?, ?, ?, ?, ?, ?, ?)');
             $stmt->execute([$formData['full_name'], $formattedPhone, $formData['email'], $password_hash, $formData['role'], $formData['governorate'], $formData['district']]);
-            $_SESSION['register_success'] = true;
+            $_SESSION['register_success'] = 'تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.';
             redirect('login.php');
         } else {
             $error = implode('<br>', $errors);
