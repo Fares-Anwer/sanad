@@ -97,7 +97,7 @@ $statusClasses = [
         <a href="add-device.php" class="inline-block mt-4 text-primary hover:text-primary-dark font-semibold">أضف جهازك الأول الآن</a>
       </div>
     <?php else: ?>
-      <table class="w-full text-right">
+      <table class="w-full text-right" aria-label="قائمة الأجهزة المضافة">
         <thead>
           <tr class="border-b border-gray-200">
             <th class="pb-3 font-semibold text-text-muted">اسم الجهاز</th>

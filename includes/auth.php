@@ -36,11 +36,11 @@ function loginUser(string $email, string $password): array {
         return ['success' => false, 'message' => 'البريد الإلكتروني أو كلمة المرور غير صحيحة'];
     }
 
-    if (!$user['is_active']) {
-        return ['success' => false, 'message' => 'الحساب غير نشط. يرجى التواصل مع الإدارة'];
+    if (!password_verify($password, $user['password_hash'])) {
+        return ['success' => false, 'message' => 'البريد الإلكتروني أو كلمة المرور غير صحيحة'];
     }
 
-    if (!password_verify($password, $user['password_hash'])) {
+    if (!$user['is_active']) {
         return ['success' => false, 'message' => 'البريد الإلكتروني أو كلمة المرور غير صحيحة'];
     }
 

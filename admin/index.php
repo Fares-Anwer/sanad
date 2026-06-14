@@ -79,37 +79,49 @@ $loanedDevices = $stmt->fetchColumn();
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
     <div class="glass rounded-2xl p-6 text-center card-hover">
-      <div class="text-4xl mb-2">👥</div>
+      <svg class="w-10 h-10 mx-auto text-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+  </svg>
       <div class="text-3xl font-bold text-text-dark"><?= $totalUsers ?></div>
       <div class="text-text-muted text-sm mt-1">إجمالي المستخدمين</div>
     </div>
 
     <div class="glass rounded-2xl p-6 text-center card-hover">
-      <div class="text-4xl mb-2">📦</div>
+      <svg class="w-10 h-10 mx-auto text-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+  </svg>
       <div class="text-3xl font-bold text-text-dark"><?= $totalDevices ?></div>
       <div class="text-text-muted text-sm mt-1">إجمالي الأجهزة</div>
     </div>
 
     <div class="glass rounded-2xl p-6 text-center card-hover border-2 border-amber-400">
-      <div class="text-4xl mb-2">⏳</div>
+      <svg class="w-10 h-10 mx-auto text-amber-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+  </svg>
       <div class="text-3xl font-bold text-amber-600"><?= $pendingDevices ?></div>
       <div class="text-text-muted text-sm mt-1">في انتظار مراجعة الأجهزة</div>
     </div>
 
     <div class="glass rounded-2xl p-6 text-center card-hover border-2 border-amber-400">
-      <div class="text-4xl mb-2">📋</div>
+      <svg class="w-10 h-10 mx-auto text-amber-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+  </svg>
       <div class="text-3xl font-bold text-amber-600"><?= $pendingRequests ?></div>
       <div class="text-text-muted text-sm mt-1">في انتظار مراجعة الطلبات</div>
     </div>
 
     <div class="glass rounded-2xl p-6 text-center card-hover">
-      <div class="text-4xl mb-2">✅</div>
+      <svg class="w-10 h-10 mx-auto text-green-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+  </svg>
       <div class="text-3xl font-bold text-green-600"><?= $activeDevices ?></div>
       <div class="text-text-muted text-sm mt-1">الأجهزة النشطة</div>
     </div>
 
     <div class="glass rounded-2xl p-6 text-center card-hover">
-      <div class="text-4xl mb-2">🔄</div>
+      <svg class="w-10 h-10 mx-auto text-purple-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+  </svg>
       <div class="text-3xl font-bold text-purple-600"><?= $loanedDevices ?></div>
       <div class="text-text-muted text-sm mt-1">الأجهزة المعارة</div>
     </div>
@@ -118,19 +130,27 @@ $loanedDevices = $stmt->fetchColumn();
   <h2 class="text-xl font-bold mb-4">روابط سريعة</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
     <a href="listings.php" class="glass rounded-2xl p-5 text-center card-hover hover:bg-white/60 transition block">
-      <div class="text-3xl mb-2">📱</div>
+      <svg class="w-8 h-8 mx-auto text-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+      </svg>
       <div class="font-semibold text-text-dark">مراجعة الأجهزة</div>
     </a>
     <a href="requests.php" class="glass rounded-2xl p-5 text-center card-hover hover:bg-white/60 transition block">
-      <div class="text-3xl mb-2">📝</div>
+      <svg class="w-8 h-8 mx-auto text-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+      </svg>
       <div class="font-semibold text-text-dark">مراجعة الطلبات</div>
     </a>
     <a href="users.php" class="glass rounded-2xl p-5 text-center card-hover hover:bg-white/60 transition block">
-      <div class="text-3xl mb-2">👤</div>
+      <svg class="w-8 h-8 mx-auto text-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+      </svg>
       <div class="font-semibold text-text-dark">إدارة المستخدمين</div>
     </a>
     <a href="../marketplace.php" class="glass rounded-2xl p-5 text-center card-hover hover:bg-white/60 transition block">
-      <div class="text-3xl mb-2">🏪</div>
+      <svg class="w-8 h-8 mx-auto text-primary mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+      </svg>
       <div class="font-semibold text-text-dark">العودة إلى السوق</div>
     </a>
   </div>

@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
 $csrf = generateCSRFToken();
-$error = '';
+$error = [];
 $formData = [
     'full_name'   => '',
     'phone'       => '',
@@ -16,7 +16,7 @@ $formData = [
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!validateCSRFToken($_POST['csrf_token'] ?? '')) {
-        $error = 'رمز غير صالح. حاول مرة أخرى.';
+        $error[] = 'رمز غير صالح. حاول مرة أخرى.';
     } else {
         $formData['full_name']   = sanitizeInput($_POST['full_name'] ?? '');
         $formData['phone']       = sanitizeInput($_POST['phone'] ?? '');
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['register_success'] = 'تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.';
             redirect('login.php');
         } else {
-            $error = implode('<br>', $errors);
+            $error = $errors;
         }
     }
 }
@@ -137,8 +137,12 @@ foreach ($allGovs as $key => $name) {
           <p class="text-text-muted mt-2">انضم إلى منصة سند للتكافل الطبي</p>
         </div>
 
-        <?php if ($error): ?>
-          <div class="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-4 border border-red-200"><?= $error ?></div>
+        <?php if (!empty($error)): ?>
+          <div class="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-4 border border-red-200">
+            <?php foreach ($error as $e): ?>
+              <div><?= htmlspecialchars($e) ?></div>
+            <?php endforeach; ?>
+          </div>
         <?php endif; ?>
 
         <form method="POST" action="" novalidate>
@@ -243,7 +247,7 @@ foreach ($allGovs as $key => $name) {
     <?php if (!empty($formData['governorate'])): ?>
     document.addEventListener('DOMContentLoaded', function() {
       populateDistricts();
-      document.getElementById('district').value = '<?= htmlspecialchars($formData['district'], ENT_QUOTES) ?>';
+      document.getElementById('district').value = <?= json_encode($formData['district'], JSON_UNESCAPED_UNICODE) ?>;
     });
     <?php endif; ?>
   </script>

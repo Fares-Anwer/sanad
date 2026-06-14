@@ -123,7 +123,7 @@ $roleLabels = [
     <form method="GET" class="flex flex-wrap gap-4 items-end">
       <div>
         <label class="block text-text-muted text-sm mb-1">الدور</label>
-        <select name="role" class="border border-gray-200 rounded-xl px-4 py-2 bg-white focus:outline-none focus:border-primary">
+        <select name="role" autocomplete="off" class="border border-gray-200 rounded-xl px-4 py-2 bg-white focus:outline-none focus:border-primary">
           <option value="">الكل</option>
           <option value="beneficiary" <?= $roleFilter === 'beneficiary' ? 'selected' : '' ?>>مستفيد</option>
           <option value="donor" <?= $roleFilter === 'donor' ? 'selected' : '' ?>>متبرع</option>
@@ -132,7 +132,7 @@ $roleLabels = [
       </div>
       <div>
         <label class="block text-text-muted text-sm mb-1">المحافظة</label>
-        <select name="governorate" class="border border-gray-200 rounded-xl px-4 py-2 bg-white focus:outline-none focus:border-primary">
+        <select name="governorate" autocomplete="off" class="border border-gray-200 rounded-xl px-4 py-2 bg-white focus:outline-none focus:border-primary">
           <option value="">الكل</option>
           <?php foreach ($governorates as $key => $name): ?>
             <option value="<?= $key ?>" <?= $govFilter === $key ? 'selected' : '' ?>><?= $name ?></option>

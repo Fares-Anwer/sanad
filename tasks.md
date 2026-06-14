@@ -78,7 +78,8 @@
 - [x] Add `requireRole('donor')` guard to donor-only pages
 - [x] Add `requireRole('admin')` guard to admin-only pages
 - [x] Redirect unauthorized users to `login.php?error=unauthorized`
-- [ ] **Verify:** Register as donor → login → redirected to donor dashboard. Register as beneficiary → login → redirected to marketplace. Access admin page as non-admin → redirected to login with error. Logout → session destroyed.
+- [x] **Verify (code audit):** Register as donor → login → redirected to donor dashboard. Register as beneficiary → login → redirected to marketplace. Access admin page as non-admin → redirected to login with error. Logout → session destroyed.
+- [ ] **Manual QA:** Walk through full registration, login, logout flows in browser to confirm
 
 ---
 

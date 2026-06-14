@@ -7,6 +7,10 @@ require_once __DIR__ . '/includes/auth.php';
 $error   = '';
 $success = '';
 
+if (isset($_GET['message']) && $_GET['message'] === 'signed_out') {
+    $success = 'تم تسجيل الخروج بنجاح';
+}
+
 if (isset($_SESSION['register_success'])) {
     $success = $_SESSION['register_success'];
     unset($_SESSION['register_success']);

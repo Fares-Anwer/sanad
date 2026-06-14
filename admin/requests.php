@@ -110,7 +110,7 @@ $statusLabels = [
               </td>
               <td class="py-3">
                 <div class="flex items-center gap-2 flex-wrap">
-                  <button onclick="toggleCase(<?= $r['id'] ?>)" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg text-sm font-semibold transition min-h-[44px]">عرض الحالة</button>
+                  <button type="button" data-toggle-case="<?= $r['id'] ?>" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg text-sm font-semibold transition min-h-[44px]">عرض الحالة</button>
                   <form method="POST" action="action.php" style="display:inline">
                     <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
                     <input type="hidden" name="action" value="approve_request">
@@ -175,10 +175,14 @@ $statusLabels = [
 </div>
 
 <script>
-function toggleCase(id) {
-  const el = document.getElementById('case-' + id);
-  if (el) el.classList.toggle('hidden');
-}
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('[data-toggle-case]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var el = document.getElementById('case-' + this.dataset.toggleCase);
+      if (el) el.classList.toggle('hidden');
+    });
+  });
+});
 </script>
 
 </body>

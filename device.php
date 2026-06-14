@@ -146,9 +146,9 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
     </div>
   </nav>
 
-  <div class="max-w-6xl mx-auto px-4 pt-6 text-sm text-text-muted">
+  <nav aria-label="Breadcrumb" class="max-w-6xl mx-auto px-4 pt-6 text-sm text-text-muted">
     <a href="marketplace.php" class="hover:text-primary">السوق</a> / <span><?= htmlspecialchars($device['name']) ?></span>
-  </div>
+  </nav>
 
   <div class="max-w-6xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-5 gap-8">
     <div class="lg:col-span-3">
@@ -235,12 +235,12 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
   <script src="assets/js/maps.js"></script>
 
 <!-- Toast -->
-<div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-green-50 text-green-700 border border-green-200 px-6 py-4 rounded-xl shadow-lg fade-in"></div>
+<div id="toast" role="alert" aria-live="polite" class="fixed bottom-6 right-6 z-50 hidden bg-green-50 text-green-700 border border-green-200 px-6 py-4 rounded-xl shadow-lg fade-in"></div>
 
 <!-- Request Modal -->
-<div id="requestModalOverlay" onclick="closeRequestModalOutside(event)" class="fixed inset-0 z-50 hidden items-center justify-center" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
+<div id="requestModalOverlay" role="dialog" aria-modal="true" aria-labelledby="requestModalTitle" onclick="closeRequestModalOutside(event)" class="fixed inset-0 z-50 hidden items-center justify-center" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
   <div onclick="event.stopPropagation()" class="glass rounded-2xl p-6 w-full max-w-lg mx-4 shadow-2xl fade-in max-h-[90vh] overflow-y-auto">
-    <h2 class="text-xl font-bold mb-4">طلب الجهاز</h2>
+    <h2 id="requestModalTitle" class="text-xl font-bold mb-4">طلب الجهاز</h2>
     <form id="requestForm">
       <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
       <input type="hidden" name="device_id" value="<?= $device['id'] ?>">
