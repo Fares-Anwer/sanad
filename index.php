@@ -10,6 +10,7 @@ $csrf = generateCSRFToken();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>سند — Sanad</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -39,7 +40,7 @@ $csrf = generateCSRFToken();
 <body class="font-tajawal bg-bg text-text-dark">
   <section class="min-h-screen flex items-center justify-center relative overflow-hidden">
     <nav class="absolute top-0 left-0 right-0 p-4 flex justify-between items-center max-w-6xl mx-auto w-full">
-      <a href="index.php" class="text-2xl font-bold text-primary">سند</a>
+      <a href="index.php"><img src="assets/images/logo.svg" alt="سند" class="h-10"></a>
       <div class="flex gap-4 items-center">
         <a href="marketplace.php" class="text-text-muted hover:text-primary transition">السوق</a>
         <?php if (isLoggedIn()): ?>

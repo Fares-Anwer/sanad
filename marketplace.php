@@ -44,6 +44,7 @@ $offerLabels = [
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>السوق | سند</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -74,7 +75,7 @@ $offerLabels = [
 
 <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
   <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="index.php" class="text-2xl font-bold text-primary">سند</a>
+    <a href="index.php"><img src="assets/images/logo.svg" alt="سند" class="h-10"></a>
     <div class="flex gap-4 items-center">
       <a href="marketplace.php" class="text-primary font-semibold">السوق</a>
       <?php if (isLoggedIn()): ?>
@@ -195,10 +196,10 @@ $offerLabels = [
                 <p class="text-text-muted text-sm mb-2">📍 <?= $govName ?>، <?= htmlspecialchars($device['district']) ?></p>
                 <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">متاح</span>
                 <?php if ($isBeneficiary): ?>
-                  <a href="device.php?id=<?= $device['id'] ?>" class="mt-3 block text-center bg-primary hover:bg-primary-dark text-white py-2 rounded-xl font-semibold transition text-sm">طلب الجهاز</a>
+                  <a href="device.php?id=<?= $device['id'] ?>" class="mt-3 block text-center bg-primary hover:bg-primary-dark text-white py-2 rounded-xl font-semibold transition text-sm min-h-[44px] flex items-center justify-center">طلب الجهاز</a>
                 <?php endif; ?>
                 <?php if (!$isBeneficiary): ?>
-                  <a href="device.php?id=<?= $device['id'] ?>" class="mt-3 block text-center border border-primary text-primary hover:bg-primary hover:text-white py-2 rounded-xl font-semibold transition text-sm">عرض التفاصيل</a>
+                  <a href="device.php?id=<?= $device['id'] ?>" class="mt-3 block text-center border border-primary text-primary hover:bg-primary hover:text-white py-2 rounded-xl font-semibold transition text-sm min-h-[44px] flex items-center justify-center">عرض التفاصيل</a>
                 <?php endif; ?>
               </div>
             </div>

@@ -264,26 +264,30 @@
 ## Phase 7 — UI Polish & Responsive (Week 7)
 
 ### 7.1 CSS Refinements
-- [ ] Card hover lift (`transform: translateY(-4px)` + shadow transition)
-- [ ] Glassmorphism modals completed
-- [ ] Loading spinners
-- [ ] Fade-in animations on page load
-- [ ] Smooth transitions on all interactive elements
+- [x] Card hover lift (`.card-hover-strong` with `translateY(-6px)` + stronger shadow)
+- [x] Glassmorphism modals (`.modal-overlay` + `.modal-glass`: backdrop-filter blur, centered, scrollable)
+- [x] Loading spinners (`.spinner`, `.spinner-lg`, `.spinner-sm`, `.spinner-white`, `.loading-overlay`)
+- [x] Fade-in animations (`.fade-in`, `.fade-in-up`, `.fade-in-left`, `.fade-in-right`, `.slide-down`)
+- [x] Smooth transitions on all interactive elements (global `a, button` + `.btn-transition`)
 
 ### 7.2 Mobile Optimization
-- [ ] Touch targets ≥ 44×44px
-- [ ] Scrollable modals (`overflow-y: auto`)
-- [ ] Font-size ≥ 16px on inputs (prevents iOS zoom)
-- [ ] Bottom padding for mobile nav
-- [ ] Verify all responsive breakpoints
+- [x] Touch targets (`.touch-target` utility with min 44×44px; `min-h-[44px]` on marketplace/device/admin buttons)
+- [x] Scrollable modals (`.modal-glass` with `overflow-y: auto`, `max-height: 90vh`; applied to device.php request modal)
+- [x] Font-size ≥ 16px on inputs (`input, select, textarea { font-size: 16px }` in CSS)
+- [x] Bottom padding for mobile nav (`@media (max-width: 768px) { body { padding-bottom: 80px } }`)
+- [x] Responsive breakpoints (`.container-responsive` with breakpoint padding; 1200px/768px/480px)
 
 ### 7.3 Logo & Favicon
-- [ ] Create `assets/images/logo.svg` — Sanad branding, teal/white
-- [ ] Create `favicon.ico`
+- [x] Create `assets/images/logo.svg` — teal cross icon + "سند" text + "منصة التكافل الطبي" subtitle
+- [x] Create `assets/images/favicon.svg` — teal rounded square with white "س"
+- [x] Add favicon link to all 11 HTML pages
+- [x] Add logo image to nav/header of all 11 HTML pages
 
 ### 7.4 RTL Audit
-- [ ] Verify `dir="rtl"` and `lang="ar"` on every page
-- [ ] Check text alignment, icon placement, form layout in RTL
+- [x] Verify `dir="rtl"` and `lang="ar"` on every page (all pages confirmed)
+- [x] Fix device.php `file:mr-3` → `file:ml-3` (RTL file input margin)
+- [x] Fix add-device.php `file:mr-3` → `file:ml-3` (RTL file input margin)
+- [x] Fix dashboard-beneficiary.php `&larr;` → `&rarr;` (RTL back arrow direction)
 
 ### 7.5 Cross-Browser Check
 - [ ] Test on Chrome 90+

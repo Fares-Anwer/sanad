@@ -94,6 +94,7 @@ foreach ($allGovs as $key => $name) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>إنشاء حساب | سند</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -131,6 +132,7 @@ foreach ($allGovs as $key => $name) {
 
       <div class="glass rounded-2xl p-8 shadow-xl fade-in">
         <div class="text-center mb-6">
+          <a href="index.php"><img src="assets/images/logo.svg" alt="سند" class="h-12 mx-auto mb-4"></a>
           <h1 class="text-3xl font-bold text-primary">إنشاء حساب جديد</h1>
           <p class="text-text-muted mt-2">انضم إلى منصة سند للتكافل الطبي</p>
         </div>

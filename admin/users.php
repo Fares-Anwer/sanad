@@ -67,6 +67,7 @@ $roleLabels = [
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>إدارة المستخدمين | سند</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -97,7 +98,7 @@ $roleLabels = [
 
 <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
   <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="../index.php" class="text-2xl font-bold text-primary">سند</a>
+    <a href="../index.php"><img src="../assets/images/logo.svg" alt="سند" class="h-10"></a>
     <div class="flex gap-4 items-center">
       <a href="index.php" class="text-text-muted hover:text-primary transition">الرئيسية</a>
       <a href="listings.php" class="text-text-muted hover:text-primary transition">الأجهزة</a>
@@ -138,7 +139,7 @@ $roleLabels = [
           <?php endforeach; ?>
         </select>
       </div>
-      <button type="submit" class="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-xl font-semibold transition">تصفية</button>
+      <button type="submit" class="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-xl font-semibold transition min-h-[44px]">تصفية</button>
       <a href="users.php" class="text-text-muted hover:text-primary transition px-4 py-2">إعادة تعيين</a>
     </form>
   </div>
@@ -181,7 +182,7 @@ $roleLabels = [
                   <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
                   <input type="hidden" name="user_id" value="<?= $u['id'] ?>">
                   <input type="hidden" name="toggle_action" value="<?= $u['is_active'] ? 'deactivate' : 'activate' ?>">
-                  <button type="submit" class="<?= $u['is_active'] ? 'bg-red-500' : 'bg-green-500' ?> text-white px-3 py-1 rounded text-sm" <?= ($u['id'] == $currentUser['id']) ? 'disabled' : '' ?>><?= $u['is_active'] ? 'إيقاف' : 'تفعيل' ?></button>
+                  <button type="submit" class="<?= $u['is_active'] ? 'bg-red-500' : 'bg-green-500' ?> text-white px-3 py-1 rounded text-sm min-h-[44px]" <?= ($u['id'] == $currentUser['id']) ? 'disabled' : '' ?>><?= $u['is_active'] ? 'إيقاف' : 'تفعيل' ?></button>
                 </form>
               </td>
             </tr>

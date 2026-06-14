@@ -33,6 +33,7 @@ $statusClasses = [
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>لوحة التحكم — المستفيد | سند</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -60,14 +61,21 @@ $statusClasses = [
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="font-tajawal bg-bg text-text-dark min-h-screen">
+  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="index.php"><img src="assets/images/logo.svg" alt="سند" class="h-10"></a>
+      <div class="flex gap-4 items-center">
+        <a href="marketplace.php" class="text-text-muted hover:text-primary transition">السوق</a>
+        <a href="logout.php" class="text-red-500 hover:text-red-700 transition">تسجيل الخروج</a>
+      </div>
+    </div>
+  </nav>
   <div class="max-w-4xl mx-auto p-6 fade-in">
     <div class="flex items-center justify-between mb-8">
       <div>
         <h1 class="text-2xl font-bold">مرحباً، <?= htmlspecialchars($currentUser['full_name']) ?></h1>
         <p class="text-text-muted text-sm mt-1">لوحة طلباتي</p>
       </div>
-      <a href="logout.php" class="text-red-500 hover:text-red-700 transition text-sm">تسجيل الخروج</a>
-    </div>
 
     <?php if (empty($requests)): ?>
       <div class="glass rounded-2xl p-8 text-center">
@@ -79,7 +87,7 @@ $statusClasses = [
       </div>
     <?php else: ?>
       <div class="mb-6">
-        <a href="marketplace.php" class="text-primary hover:text-primary-dark font-semibold text-sm transition">&larr; العودة إلى السوق</a>
+        <a href="marketplace.php" class="text-primary hover:text-primary-dark font-semibold text-sm transition">&rarr; العودة إلى السوق</a>
       </div>
 
       <div class="space-y-4">

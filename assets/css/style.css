@@ -64,3 +64,192 @@ body {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+.card-hover-strong {
+  transition: all 0.3s ease;
+}
+.card-hover-strong:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+a, button { transition: all 0.2s ease; }
+
+.btn-transition { transition: all 0.3s ease; }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  max-width: 600px;
+  width: 100%;
+  margin: 1rem;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.spinner-lg {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #00B4D8;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 0.6s linear infinite;
+}
+
+.spinner-sm {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #00B4D8;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 0.6s linear infinite;
+}
+
+.spinner-white {
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 0.6s linear infinite;
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-left {
+  animation: fadeInLeft 0.4s ease-out;
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.fade-in-right {
+  animation: fadeInRight 0.4s ease-out;
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+input, select, textarea { font-size: 16px; }
+
+.text-shadow { text-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+
+.btn-primary, .btn-secondary, .btn-danger, .btn-success {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+.btn-primary { background: #00B4D8; color: #fff; }
+.btn-primary:hover { background: #0077A8; }
+
+.btn-secondary { background: #e5e7eb; color: #1A1A2E; }
+.btn-secondary:hover { background: #d1d5db; }
+
+.btn-danger { background: #EF4444; color: #fff; }
+.btn-danger:hover { background: #DC2626; }
+
+.btn-success { background: #10B981; color: #fff; }
+.btn-success:hover { background: #059669; }
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.badge-pending { background: #F59E0B; color: #fff; }
+.badge-approved { background: #10B981; color: #fff; }
+.badge-rejected { background: #EF4444; color: #fff; }
+.badge-active { background: #3B82F6; color: #fff; }
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #6B7280;
+}
+
+.container-responsive {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 480px) {
+  .container-responsive { padding: 0 1.5rem; }
+}
+
+@media (min-width: 768px) {
+  .container-responsive { padding: 0 2rem; }
+}
+
+@media (min-width: 1200px) {
+  .container-responsive { max-width: 1200px; padding: 0 2rem; }
+}
+
+@media (max-width: 768px) {
+  body { padding-bottom: 80px; }
+}

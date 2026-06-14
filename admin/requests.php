@@ -33,6 +33,7 @@ $statusLabels = [
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>مراجعة الطلبات | سند</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,7 +64,7 @@ $statusLabels = [
 
 <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
   <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="../index.php" class="text-2xl font-bold text-primary">سند</a>
+    <a href="../index.php"><img src="../assets/images/logo.svg" alt="سند" class="h-10"></a>
     <div class="flex gap-4 items-center">
       <a href="index.php" class="text-text-muted hover:text-primary transition">الرئيسية</a>
       <a href="requests.php" class="text-primary font-semibold transition">الطلبات</a>
@@ -109,19 +110,19 @@ $statusLabels = [
               </td>
               <td class="py-3">
                 <div class="flex items-center gap-2 flex-wrap">
-                  <button onclick="toggleCase(<?= $r['id'] ?>)" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg text-sm font-semibold transition">عرض الحالة</button>
+                  <button onclick="toggleCase(<?= $r['id'] ?>)" class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg text-sm font-semibold transition min-h-[44px]">عرض الحالة</button>
                   <form method="POST" action="action.php" style="display:inline">
                     <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
                     <input type="hidden" name="action" value="approve_request">
                     <input type="hidden" name="request_id" value="<?= $r['id'] ?>">
-                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">قبول</button>
+                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition min-h-[44px]">قبول</button>
                   </form>
                   <form method="POST" action="action.php" style="display:inline" onsubmit="return confirm('تأكيد الرفض؟')">
                     <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
                     <input type="hidden" name="action" value="reject_request">
                     <input type="hidden" name="request_id" value="<?= $r['id'] ?>">
                     <input type="text" name="rejection_reason" required placeholder="سبب الرفض" class="border rounded px-2 py-1 text-sm">
-                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">رفض</button>
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition min-h-[44px]">رفض</button>
                   </form>
                 </div>
                 <div id="case-<?= $r['id'] ?>" class="hidden mt-4 p-4 border border-gray-200 rounded-xl bg-white/50">

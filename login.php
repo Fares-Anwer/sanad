@@ -37,6 +37,7 @@ $csrf = generateCSRFToken();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تسجيل الدخول | سند</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -67,7 +68,7 @@ $csrf = generateCSRFToken();
   <div class="min-h-screen flex items-center justify-center p-4">
     <div class="glass w-full max-w-md rounded-2xl p-8 fade-in">
       <div class="text-center mb-8">
-        <a href="index.php" class="text-3xl font-bold text-primary">سند</a>
+        <a href="index.php"><img src="assets/images/logo.svg" alt="سند" class="h-12 mx-auto"></a>
         <p class="text-text-muted mt-1">تسجيل الدخول إلى حسابك</p>
       </div>
 

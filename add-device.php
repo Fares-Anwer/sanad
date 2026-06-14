@@ -193,6 +193,7 @@ if (isset($_SESSION['add_device_success'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>إضافة جهاز | سند</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -223,7 +224,7 @@ if (isset($_SESSION['add_device_success'])) {
 
 <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
   <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="index.php" class="text-2xl font-bold text-primary">سند</a>
+    <a href="index.php"><img src="assets/images/logo.svg" alt="سند" class="h-10"></a>
     <div class="flex gap-4 items-center">
       <a href="marketplace.php" class="text-text-muted hover:text-primary transition">السوق</a>
       <a href="<?= $user['role'] === 'admin' ? 'admin/index.php' : 'dashboard-donor.php' ?>" class="text-text-muted hover:text-primary transition">لوحة التحكم</a>
@@ -337,7 +338,7 @@ if (isset($_SESSION['add_device_success'])) {
 
       <div class="mb-6">
         <label for="photos" class="block text-sm font-semibold text-text-dark mb-1">إضافة صور</label>
-        <input type="file" id="photos" name="photos[]" multiple accept=".jpg,.jpeg,.png,.webp" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-white file:font-semibold file:cursor-pointer file:hover:bg-primary-dark">
+        <input type="file" id="photos" name="photos[]" multiple accept=".jpg,.jpeg,.png,.webp" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white file:ml-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-white file:font-semibold file:cursor-pointer file:hover:bg-primary-dark">
         <div id="photoPreview" class="mt-4"></div>
         <p class="text-xs text-text-muted mt-1">يمكنك إضافة حتى 6 صور. الصورة الأولى ستكون الصورة الرئيسية.</p>
       </div>

@@ -21,6 +21,7 @@ if (!$device) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>٤٠٤ | سند</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -37,7 +38,7 @@ if (!$device) {
     <div class="text-center">
       <h1 class="text-4xl font-bold text-text-muted mb-4">٤٠٤</h1>
       <p class="text-text-muted">الجهاز غير موجود</p>
-      <a href="marketplace.php" class="mt-6 inline-block bg-primary text-white px-6 py-2 rounded-xl">العودة للسوق</a>
+      <a href="marketplace.php" class="mt-6 inline-block bg-primary text-white px-6 py-2 rounded-xl min-h-[44px]">العودة للسوق</a>
     </div>
   </div>
 </body>
@@ -101,6 +102,7 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= htmlspecialchars($device['name']) ?> | سند</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -133,7 +135,7 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
 <body class="font-tajawal bg-bg text-text-dark min-h-screen">
   <nav class="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-      <a href="index.php" class="text-2xl font-bold text-primary">سند</a>
+      <a href="index.php"><img src="assets/images/logo.svg" alt="سند" class="h-10"></a>
       <div class="flex gap-4 items-center">
         <a href="marketplace.php" class="text-text-muted hover:text-primary transition text-sm">السوق</a>
         <?php if (isLoggedIn()): ?>
@@ -215,12 +217,12 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
 
         <div class="mt-6 space-y-3">
           <?php if ($isBeneficiary && $device['status'] === 'active'): ?>
-            <button type="button" id="requestBtn" onclick="openRequestModal()" class="block w-full text-center bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold transition-all shadow-lg cursor-pointer">طلب هذا الجهاز</button>
+            <button type="button" id="requestBtn" onclick="openRequestModal()" class="block w-full text-center bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold transition-all shadow-lg cursor-pointer min-h-[44px]">طلب هذا الجهاز</button>
           <?php endif; ?>
           <?php if ($isBeneficiary && $device['status'] !== 'active'): ?>
-            <button disabled class="block w-full text-center bg-gray-300 text-gray-500 py-3 rounded-xl font-semibold cursor-not-allowed">الجهاز غير متاح حالياً</button>
+            <button disabled class="block w-full text-center bg-gray-300 text-gray-500 py-3 rounded-xl font-semibold cursor-not-allowed min-h-[44px]">الجهاز غير متاح حالياً</button>
           <?php endif; ?>
-          <a href="marketplace.php" class="block text-center border border-primary text-primary hover:bg-primary hover:text-white py-3 rounded-xl font-semibold transition-all">العودة للسوق</a>
+          <a href="marketplace.php" class="block text-center border border-primary text-primary hover:bg-primary hover:text-white py-3 rounded-xl font-semibold transition-all min-h-[44px]">العودة للسوق</a>
         </div>
       </div>
     </div>
@@ -238,7 +240,7 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
 
 <!-- Request Modal -->
 <div id="requestModalOverlay" onclick="closeRequestModalOutside(event)" class="fixed inset-0 z-50 hidden items-center justify-center" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
-  <div onclick="event.stopPropagation()" class="glass rounded-2xl p-6 w-full max-w-lg mx-4 shadow-2xl fade-in">
+  <div onclick="event.stopPropagation()" class="glass rounded-2xl p-6 w-full max-w-lg mx-4 shadow-2xl fade-in max-h-[90vh] overflow-y-auto">
     <h2 class="text-xl font-bold mb-4">طلب الجهاز</h2>
     <form id="requestForm">
       <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
@@ -255,15 +257,15 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
 
       <div class="mb-4">
         <label class="block text-sm font-semibold text-text-dark mb-1">تقرير طبي</label>
-        <input type="file" id="medical_report" name="medical_report" accept=".jpg,.jpeg,.png,.pdf" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-white file:font-semibold file:cursor-pointer file:hover:bg-primary-dark">
+        <input type="file" id="medical_report" name="medical_report" accept=".jpg,.jpeg,.png,.pdf" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white file:ml-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-white file:font-semibold file:cursor-pointer file:hover:bg-primary-dark">
         <p class="text-xs text-text-muted mt-1">يرجى رفع تقرير طبي يوضح حالتك الصحية</p>
       </div>
 
       <div id="requestModalError" class="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-4 hidden border border-red-200"></div>
 
       <div class="flex gap-3">
-        <button type="button" onclick="closeRequestModal()" class="flex-1 border border-gray-300 text-text-dark py-3 rounded-xl font-semibold transition-all hover:bg-gray-50">إلغاء</button>
-        <button type="submit" id="requestSubmitBtn" class="flex-1 bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold transition-all shadow-lg">إرسال الطلب</button>
+        <button type="button" onclick="closeRequestModal()" class="flex-1 border border-gray-300 text-text-dark py-3 rounded-xl font-semibold transition-all hover:bg-gray-50 min-h-[44px]">إلغاء</button>
+        <button type="submit" id="requestSubmitBtn" class="flex-1 bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold transition-all shadow-lg min-h-[44px]">إرسال الطلب</button>
       </div>
     </form>
   </div>
