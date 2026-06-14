@@ -79,6 +79,9 @@ $offerLabels = [
     <div class="flex gap-4 items-center">
       <a href="marketplace.php" class="text-primary font-semibold">السوق</a>
       <?php if (isLoggedIn()): ?>
+        <?php if ($currentUser && $currentUser['role'] === 'beneficiary'): ?>
+          <a href="dashboard-beneficiary.php" class="text-text-muted hover:text-primary transition">طلباتي</a>
+        <?php endif; ?>
         <a href="logout.php" class="text-text-muted hover:text-primary transition">خروج</a>
       <?php else: ?>
         <a href="login.php" class="text-text-muted hover:text-primary transition">دخول</a>
