@@ -6,6 +6,33 @@ require_once __DIR__ . '/includes/auth.php';
 requireRole('donor');
 $currentUser = getCurrentUser();
 $csrf = generateCSRFToken();
+
+$stmt = $pdo->prepare("SELECT * FROM devices WHERE donor_id = ? ORDER BY created_at DESC");
+$stmt->execute([$currentUser['id']]);
+$devices = $stmt->fetchAll();
+
+$categoryLabels = [
+    'respiratory' => 'جهاز تنفسي',
+    'mobility' => 'جهاز حركي',
+    'beds_clinical' => 'أسرة وسريرية',
+    'diagnostic' => 'تشخيصي',
+];
+
+$statusLabels = [
+    'pending_review' => 'قيد المراجعة',
+    'active' => 'نشط',
+    'under_request_review' => 'قيد طلب الإعارة',
+    'loaned' => 'معار حالياً',
+    'rejected' => 'مرفوض',
+];
+
+$statusClasses = [
+    'pending_review' => 'bg-amber-100 text-amber-800',
+    'active' => 'bg-green-100 text-green-800',
+    'under_request_review' => 'bg-blue-100 text-blue-800',
+    'loaned' => 'bg-purple-100 text-purple-800',
+    'rejected' => 'bg-red-100 text-red-800',
+];
 ?><!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
@@ -39,23 +66,71 @@ $csrf = generateCSRFToken();
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="font-tajawal bg-bg text-text-dark min-h-screen">
-  <div class="max-w-4xl mx-auto p-6 fade-in">
-    <div class="flex items-center justify-between mb-8">
-      <h1 class="text-2xl font-bold">مرحباً، <?= htmlspecialchars($currentUser['full_name']) ?></h1>
-      <a href="logout.php" class="text-red-500 hover:text-red-700 transition text-sm">تسجيل الخروج</a>
-    </div>
 
-    <div class="glass rounded-2xl p-8 text-center">
-      <p class="text-text-muted text-lg mb-6">سيتم إضافة قائمة أجهزتك هنا قريباً</p>
-      <div class="flex gap-4 justify-center">
-        <a href="add-device.php" class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
-          إضافة جهاز جديد
-        </a>
-        <a href="marketplace.php" class="bg-white hover:bg-accent text-primary border-2 border-primary px-6 py-3 rounded-xl font-semibold transition-all duration-300">
-          السوق
-        </a>
-      </div>
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="index.php" class="text-2xl font-bold text-primary">سند</a>
+    <div class="flex gap-4 items-center">
+      <a href="marketplace.php" class="text-text-muted hover:text-primary transition">السوق</a>
+      <a href="add-device.php" class="text-text-muted hover:text-primary transition">إضافة جهاز</a>
+      <a href="logout.php" class="text-red-500 hover:text-red-700 transition">تسجيل الخروج</a>
     </div>
   </div>
+</nav>
+
+<div class="max-w-5xl mx-auto p-6 fade-in">
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-2xl font-bold">مرحباً، <?= htmlspecialchars($currentUser['full_name']) ?></h1>
+  </div>
+
+  <div class="mb-8">
+    <a href="add-device.php" class="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">إضافة جهاز جديد</a>
+  </div>
+
+  <div class="glass rounded-2xl p-6 overflow-x-auto">
+    <?php if (empty($devices)): ?>
+      <div class="text-center py-12">
+        <p class="text-text-muted text-lg">لا توجد أجهزة مضافة بعد</p>
+        <a href="add-device.php" class="inline-block mt-4 text-primary hover:text-primary-dark font-semibold">أضف جهازك الأول الآن</a>
+      </div>
+    <?php else: ?>
+      <table class="w-full text-right">
+        <thead>
+          <tr class="border-b border-gray-200">
+            <th class="pb-3 font-semibold text-text-muted">اسم الجهاز</th>
+            <th class="pb-3 font-semibold text-text-muted">التصنيف</th>
+            <th class="pb-3 font-semibold text-text-muted">الحالة</th>
+            <th class="pb-3 font-semibold text-text-muted">تاريخ الإضافة</th>
+            <th class="pb-3 font-semibold text-text-muted">سبب الرفض</th>
+            <th class="pb-3 font-semibold text-text-muted">إجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($devices as $device): ?>
+            <tr class="border-b border-gray-100 hover:bg-white/50 transition">
+              <td class="py-3 font-medium"><?= htmlspecialchars($device['name']) ?></td>
+              <td class="py-3"><?= $categoryLabels[$device['category']] ?? $device['category'] ?></td>
+              <td class="py-3">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold <?= $statusClasses[$device['status']] ?>">
+                  <?= $statusLabels[$device['status']] ?? $device['status'] ?>
+                </span>
+              </td>
+              <td class="py-3 text-text-muted text-sm"><?= date('Y-m-d', strtotime($device['created_at'])) ?></td>
+              <td class="py-3 text-sm">
+                <?= ($device['status'] === 'rejected' && $device['rejection_reason']) ? htmlspecialchars($device['rejection_reason']) : '—' ?>
+              </td>
+              <td class="py-3">
+                <?php if ($device['status'] === 'active'): ?>
+                  <a href="device.php?id=<?= $device['id'] ?>" class="text-primary hover:text-primary-dark font-semibold text-sm">عرض في السوق</a>
+                <?php endif; ?>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    <?php endif; ?>
+  </div>
+</div>
+
 </body>
 </html>

@@ -47,3 +47,76 @@ function showMapFallback(el, lat, lng, hasCoords) {
 }
 
 document.addEventListener('DOMContentLoaded', initMap);
+
+function initMapPicker() {
+  var picker = document.getElementById('mapPicker');
+  if (!picker) return;
+
+  var latInput = document.getElementById('latitude');
+  var lngInput = document.getElementById('longitude');
+  var manualLat = document.getElementById('manualLat');
+  var manualLng = document.getElementById('manualLng');
+
+  if (!GOOGLE_MAPS_API_KEY || typeof google === 'undefined' || typeof google.maps === 'undefined') {
+    picker.style.display = 'none';
+    if (manualLat && manualLng) {
+      manualLat.style.display = '';
+      manualLng.style.display = '';
+      var updateHidden = function() {
+        latInput.value = manualLat.value;
+        lngInput.value = manualLng.value;
+      };
+      manualLat.addEventListener('input', updateHidden);
+      manualLng.addEventListener('input', updateHidden);
+    }
+    var instructions = document.createElement('p');
+    instructions.className = 'text-sm text-text-muted mb-2';
+    instructions.textContent = 'أدخل الإحداثيات يدوياً أو فعّل Google Maps API';
+    picker.parentNode.insertBefore(instructions, picker.nextSibling);
+    return;
+  }
+
+  if (manualLat && manualLng) {
+    manualLat.style.display = 'none';
+    manualLng.style.display = 'none';
+  }
+  picker.style.display = '';
+
+  var instruction = document.createElement('p');
+  instruction.className = 'text-sm text-primary font-semibold mb-1';
+  instruction.textContent = 'تحديد الموقع';
+  picker.parentNode.insertBefore(instruction, picker);
+
+  var map = new google.maps.Map(picker, {
+    center: { lat: 15.5527, lng: 48.5164 },
+    zoom: 6,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    disableDefaultUI: true,
+    zoomControl: true,
+  });
+
+  var marker = null;
+
+  map.addListener('click', function(e) {
+    if (marker) {
+      marker.setMap(null);
+    }
+    marker = new google.maps.Marker({
+      position: e.latLng,
+      map: map,
+      draggable: true,
+    });
+    latInput.value = e.latLng.lat();
+    lngInput.value = e.latLng.lng();
+    marker.addListener('click', function() {
+      marker.setMap(null);
+      marker = null;
+      latInput.value = '';
+      lngInput.value = '';
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('mapPicker')) initMapPicker();
+});

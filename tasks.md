@@ -120,39 +120,39 @@
 ## Phase 3 — Device Listing System (Weeks 3–4)
 
 ### 3.1 Add Device Form
-- [ ] Create `add-device.php` — guard: donors + admins only
-- [ ] Fields: name, category (dropdown), condition (radio), description (textarea, min 30 chars), offer type (radio: donation/loan)
-- [ ] Add loan duration dropdown (conditional, shown when offer=loan): 2 weeks / 1 month / 3 months / 6 months / negotiable
-- [ ] Add map picker (lat/lng hidden fields)
-- [ ] Add photo upload (multiple, 1–6 files)
-- [ ] Implement server-side validation for all fields
+- [x] Create `add-device.php` — guard: donors + admins only
+- [x] Fields: name, category (dropdown), condition (radio), description (textarea, min 30 chars), offer type (radio: donation/loan)
+- [x] Add loan duration dropdown (conditional, shown when offer=loan): 2 weeks / 1 month / 3 months / 6 months / negotiable
+- [x] Add map picker (lat/lng hidden fields)
+- [x] Add photo upload (multiple, 1–6 files)
+- [x] Implement server-side validation for all fields
 
 ### 3.2 Map Picker
-- [ ] Implement in `assets/js/maps.js` — interactive map on `add-device.php`
-- [ ] Click to place marker, click again to remove
-- [ ] Capture lat/lng into hidden form fields
-- [ ] Default center: Yemen
+- [x] Implement in `assets/js/maps.js` — interactive map on `add-device.php`
+- [x] Click to place marker, click again to remove
+- [x] Capture lat/lng into hidden form fields
+- [x] Default center: Yemen
 
 ### 3.3 Photo Upload & Preview
-- [ ] Implement in `assets/js/validation.js` — client-side preview of selected photos before submit
-- [ ] Validate count (1–6), file type, file size client-side
+- [x] Implement in `assets/js/validation.js` — client-side preview of selected photos before submit
+- [x] Validate count (1–6), file type, file size client-side
 
 ### 3.4 Secure Upload Handler
-- [ ] Implement in `includes/functions.php` — `finfo_file()` MIME verification
-- [ ] Whitelist `.jpg/.jpeg/.png/.webp`, max 5MB each
-- [ ] UUID v4 rename for each uploaded file
-- [ ] Store in `uploads/devices/`
+- [x] Implement in `includes/functions.php` — `finfo_file()` MIME verification
+- [x] Whitelist `.jpg/.jpeg/.png/.webp`, max 5MB each
+- [x] UUID v4 rename for each uploaded file
+- [x] Store in `uploads/devices/`
 
 ### 3.5 Form Submission
-- [ ] Implement POST handler in `add-device.php` — validate all fields
-- [ ] Upload photos, insert into `devices` + `device_photos` tables
-- [ ] Set status = `pending_review`
-- [ ] Show donor confirmation message
+- [x] Implement POST handler in `add-device.php` — validate all fields
+- [x] Upload photos, insert into `devices` + `device_photos` tables
+- [x] Set status = `pending_review`
+- [x] Show donor confirmation message
 
 ### 3.6 Donor Dashboard
-- [ ] Create `dashboard-donor.php` — guard: donor + admin
-- [ ] List all donor's devices with status badges: Pending Review / Active / Under Request Review / Currently Loaned / Rejected
-- [ ] Show rejection reason if applicable
+- [x] Create `dashboard-donor.php` — guard: donor + admin
+- [x] List all donor's devices with status badges: Pending Review / Active / Under Request Review / Currently Loaned / Rejected
+- [x] Show rejection reason if applicable
 - [ ] **Verify:** Login as donor → add-device → fill form → upload photos → pin location → submit → confirmation → device appears as "Pending Review". Try uploading >6 photos → error. Try invalid file type → error. Check `uploads/devices/` for UUID-named files.
 
 ---

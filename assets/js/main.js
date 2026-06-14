@@ -15,7 +15,9 @@ function populateDistricts(selectEl, governorateKey) {
 }
 
 function filterDevices() {
-  var search = document.getElementById('searchInput').value.toLowerCase();
+  var searchInput = document.getElementById('searchInput');
+  if (!searchInput) return;
+  var search = searchInput.value.toLowerCase();
   var governorate = document.getElementById('filterGovernorate').value;
   var district = document.getElementById('filterDistrict').value;
   var category = document.getElementById('filterCategory').value;
