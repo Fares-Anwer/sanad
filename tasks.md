@@ -85,34 +85,34 @@
 ## Phase 2 — Marketplace & Catalog (Weeks 2–3)
 
 ### 2.1 Homepage
-- [ ] Create `index.php` — hero section with mission statement + CTAs
-- [ ] Add stats bar (devices available, families helped, governorates covered)
-- [ ] Add "How It Works" 3-step visual guide
-- [ ] Add "Browse Devices" / "List a Device" buttons
+- [x] Create `index.php` — hero section with mission statement + CTAs
+- [x] Add stats bar (devices available, families helped, governorates covered)
+- [x] Add "How It Works" 3-step visual guide
+- [x] Add "Browse Devices" / "List a Device" buttons
 
 ### 2.2 Marketplace Page
-- [ ] Create `marketplace.php` — device card grid (CSS Grid: 3-col ≥1200px, 2-col ≥768px, 1-col <768px)
-- [ ] Each card: primary photo, name, category badge, condition badge (color-coded), offer type badge, location text, status badge
-- [ ] Add "Request" button (visible only for beneficiary role)
-- [ ] Add search bar
-- [ ] Add filter sidebar: text search, governorate→district cascade dropdowns, medical category, offer type, device condition
+- [x] Create `marketplace.php` — device card grid (CSS Grid: 3-col ≥1200px, 2-col ≥768px, 1-col <768px)
+- [x] Each card: primary photo, name, category badge, condition badge (color-coded), offer type badge, location text, status badge
+- [x] Add "Request" button (visible only for beneficiary role)
+- [x] Add search bar
+- [x] Add filter sidebar: text search, governorate→district cascade dropdowns, medical category, offer type, device condition
 
 ### 2.3 Dynamic Filtering (JavaScript)
-- [ ] Implement in `assets/js/main.js` — filter marketplace cards without page reload (DOM manipulation on card dataset attributes)
-- [ ] Add "Clear All Filters" button
-- [ ] Add active filter indicators
+- [x] Implement in `assets/js/main.js` — filter marketplace cards without page reload (DOM manipulation on card dataset attributes)
+- [x] Add "Clear All Filters" button
+- [x] Add active filter indicators
 
 ### 2.4 Device Detail Page
-- [ ] Create `device.php?id=X` — full photo gallery (swipeable on mobile via touch events)
-- [ ] Show complete description, condition + offer type details
-- [ ] Show location + embedded Google Map (read-only)
-- [ ] Add "Request This Device" button
-- [ ] Add status indicator
+- [x] Create `device.php?id=X` — full photo gallery (swipeable on mobile via touch events)
+- [x] Show complete description, condition + offer type details
+- [x] Show location + embedded Google Map (read-only)
+- [x] Add "Request This Device" button
+- [x] Add status indicator
 
 ### 2.5 Maps Display
-- [ ] Implement in `assets/js/maps.js` — `initMap()` centered on Yemen (15.5527, 48.5164, zoom 6)
-- [ ] Place marker at device lat/lng
-- [ ] Handle missing API key gracefully — show fallback image + coordinates as text
+- [x] Implement in `assets/js/maps.js` — `initMap()` centered on Yemen (15.5527, 48.5164, zoom 6)
+- [x] Place marker at device lat/lng
+- [x] Handle missing API key gracefully — show fallback image + coordinates as text
 - [ ] **Verify:** Browse devices as unauthenticated user. See all device cards. Type in search → cards filter. Select governorate → district dropdown populates. Click device → detail page loads with map.
 
 ---
