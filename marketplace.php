@@ -81,6 +81,10 @@ $offerLabels = [
       <?php if (isLoggedIn()): ?>
         <?php if ($currentUser && $currentUser['role'] === 'beneficiary'): ?>
           <a href="dashboard-beneficiary.php" class="text-text-muted hover:text-primary transition">طلباتي</a>
+        <?php elseif ($currentUser && $currentUser['role'] === 'donor'): ?>
+          <a href="dashboard-donor.php" class="text-text-muted hover:text-primary transition">لوحة التحكم</a>
+        <?php elseif ($currentUser && $currentUser['role'] === 'admin'): ?>
+          <a href="admin/index.php" class="text-text-muted hover:text-primary transition">لوحة التحكم</a>
         <?php endif; ?>
         <a href="logout.php" class="text-text-muted hover:text-primary transition">خروج</a>
       <?php else: ?>

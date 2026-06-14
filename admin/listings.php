@@ -84,6 +84,7 @@ $statusClasses = [
     <div class="flex gap-4 items-center">
       <a href="index.php" class="text-text-muted hover:text-primary transition">لوحة التحكم</a>
       <a href="listings.php" class="text-primary font-semibold transition">مراجعة الأجهزة</a>
+      <a href="requests.php" class="text-text-muted hover:text-primary transition">الطلبات</a>
       <a href="users.php" class="text-text-muted hover:text-primary transition">المستخدمين</a>
       <a href="../marketplace.php" class="text-text-muted hover:text-primary transition">السوق</a>
       <a href="../logout.php" class="text-red-500 hover:text-red-700 transition">تسجيل الخروج</a>

@@ -136,7 +136,15 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
       <a href="index.php"><img src="assets/images/logo.svg" alt="سند" class="h-10"></a>
       <div class="flex gap-4 items-center">
         <a href="marketplace.php" class="text-text-muted hover:text-primary transition text-sm">السوق</a>
-        <?php if (isLoggedIn()): ?>
+        <?php if (isLoggedIn()):
+          $user = getCurrentUser(); ?>
+          <?php if ($user && $user['role'] === 'beneficiary'): ?>
+            <a href="dashboard-beneficiary.php" class="text-text-muted hover:text-primary transition text-sm">طلباتي</a>
+          <?php elseif ($user && $user['role'] === 'donor'): ?>
+            <a href="dashboard-donor.php" class="text-text-muted hover:text-primary transition text-sm">لوحة التحكم</a>
+          <?php elseif ($user && $user['role'] === 'admin'): ?>
+            <a href="admin/index.php" class="text-text-muted hover:text-primary transition text-sm">لوحة التحكم</a>
+          <?php endif; ?>
           <a href="logout.php" class="text-red-500 hover:text-red-700 transition text-sm">خروج</a>
         <?php else: ?>
           <a href="login.php" class="text-text-muted hover:text-primary transition text-sm">دخول</a>

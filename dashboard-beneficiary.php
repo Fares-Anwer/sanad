@@ -67,6 +67,7 @@ $statusClasses = [
       <a href="index.php"><img src="assets/images/logo.svg" alt="سند" class="h-10"></a>
       <div class="flex gap-4 items-center">
         <a href="marketplace.php" class="text-text-muted hover:text-primary transition">السوق</a>
+        <a href="dashboard-beneficiary.php" class="text-primary font-semibold transition">طلباتي</a>
         <a href="logout.php" class="text-red-500 hover:text-red-700 transition">تسجيل الخروج</a>
       </div>
     </div>

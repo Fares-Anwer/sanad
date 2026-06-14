@@ -67,6 +67,7 @@ $statusLabels = [
     <a href="../index.php"><img src="../assets/images/logo.svg" alt="سند" class="h-10"></a>
     <div class="flex gap-4 items-center">
       <a href="index.php" class="text-text-muted hover:text-primary transition">الرئيسية</a>
+      <a href="listings.php" class="text-text-muted hover:text-primary transition">الأجهزة</a>
       <a href="requests.php" class="text-primary font-semibold transition">الطلبات</a>
       <a href="users.php" class="text-text-muted hover:text-primary transition">المستخدمين</a>
       <a href="../marketplace.php" class="text-text-muted hover:text-primary transition">السوق</a>
