@@ -197,41 +197,42 @@
 ## Phase 5 — Admin Control Panel (Weeks 5–6)
 
 ### 5.1 Admin Dashboard
-- [ ] Create `admin/index.php` — guard: admin only
-- [ ] Stat cards: total users, total devices, pending device approvals (highlighted), pending request reviews (highlighted), active devices, loaned devices
-- [ ] Quick links to all admin sections
+- [x] Create `admin/index.php` — guard: admin only
+- [x] Stat cards: total users, total devices, pending device approvals (highlighted), pending request reviews (highlighted), active devices, loaned devices
+- [x] Quick links to all admin sections
 
 ### 5.2 Device Listing Review
-- [ ] Create `admin/listings.php` — table of devices with status = `pending_review`
-- [ ] Each row: device name, donor name, category, submitted date
-- [ ] "View Details" — modal/section showing full device info + all photos
-- [ ] [Approve] [Reject] buttons per row
+- [x] Create `admin/listings.php` — table of devices with status = `pending_review`
+- [x] Each row: device name, donor name, category, submitted date
+- [x] "View Details" — modal/section showing full device info + all photos
+- [x] [Approve] [Reject] buttons per row
 
 ### 5.3 Request Review
-- [ ] Create `admin/requests.php` — table of requests with status = `pending`
-- [ ] Each row: device name, beneficiary name, governorate, submitted date
-- [ ] "View Case" — shows case description + link to view medical doc
-- [ ] [Approve] [Reject] buttons per row
+- [x] Create `admin/requests.php` — table of requests with status = `pending`
+- [x] Each row: device name, beneficiary name, governorate, submitted date
+- [x] "View Case" — shows case description + link to view medical doc
+- [x] [Approve] [Reject] buttons per row
 
 ### 5.4 Approve/Reject Handler
-- [ ] Create `admin/action.php` — POST handler
-- [ ] Validate CSRF token + admin session
-- [ ] Handle `action=approve_device`, `reject_device`, `approve_request`, `reject_request`
-- [ ] On reject: require rejection reason text
-- [ ] On approve: update status, log `admin_reviewed_by` + `admin_reviewed_at`
-- [ ] Device approve → status `active`
-- [ ] Device reject → status `rejected` + store `rejection_reason`
-- [ ] Request approve → status `approved`, device → `loaned`
-- [ ] Request reject → status `rejected`, device back to `active`
+- [x] Create `admin/action.php` — POST handler
+- [x] Validate CSRF token + admin session
+- [x] Handle `action=approve_device`, `reject_device`, `approve_request`, `reject_request`
+- [x] On reject: require rejection reason text
+- [x] On approve: update status, log `admin_reviewed_by` + `admin_reviewed_at`
+- [x] Device approve → status `active`
+- [x] Device reject → status `rejected` + store `rejection_reason`
+- [x] Request approve → status `approved`, device → `loaned`
+- [x] Request reject → status `rejected`, device back to `active`
 
 ### 5.5 User Management
-- [ ] Create `admin/users.php` — table of all users
-- [ ] Filter by role, governorate
-- [ ] Deactivate/reactivate toggle (sets `is_active`)
-- [ ] Cannot deactivate own admin account
+- [x] Create `admin/users.php` — table of all users
+- [x] Filter by role, governorate
+- [x] Deactivate/reactivate toggle (sets `is_active`)
+- [x] Cannot deactivate own admin account
 
 ### 5.6 Admin Role Guards
-- [ ] Add `requireRole('admin')` at top of every admin file (before any output)
+- [x] Add `requireRole('admin', '../login.php?error=unauthorized')` at top of every admin file
+- [x] Enhanced `requireRole()` in `auth.php` with optional `$redirectUrl` parameter for subdirectory support
 - [ ] **Verify:** Login as admin → see dashboard stats. Approve a device → it appears in marketplace. Approve a request → device status changes to loaned. Reject a listing → donor sees rejection reason. Access admin pages as non-admin → redirect to login.
 
 ---

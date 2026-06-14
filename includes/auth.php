@@ -16,13 +16,13 @@ function getCurrentUser(): ?array {
     return $user ?: null;
 }
 
-function requireRole(string $role): void {
+function requireRole(string $role, string $redirectUrl = 'login.php?error=unauthorized'): void {
     if (!isLoggedIn()) {
-        redirect('login.php?error=unauthorized');
+        redirect($redirectUrl);
     }
     $user = getCurrentUser();
     if (!$user || $user['role'] !== $role) {
-        redirect('login.php?error=unauthorized');
+        redirect($redirectUrl);
     }
 }
 
