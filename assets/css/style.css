@@ -1,0 +1,66 @@
+:root {
+  --tw-color-primary: #00B4D8;
+  --tw-color-primary-dark: #0077A8;
+  --tw-color-secondary: #90E0EF;
+  --tw-color-accent: #CAF0F8;
+  --tw-color-bg: #F0F8FF;
+  --tw-color-text-dark: #1A1A2E;
+  --tw-color-text-muted: #6B7280;
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.status-pending_review { background: #F59E0B; color: #fff; }
+.status-active { background: #10B981; color: #fff; }
+.status-under_request_review { background: #F59E0B; color: #fff; }
+.status-loaned { background: #3B82F6; color: #fff; }
+.status-rejected { background: #EF4444; color: #fff; }
+
+.status-pending { background: #F59E0B; color: #fff; }
+.status-approved { background: #10B981; color: #fff; }
+.status-rejected { background: #EF4444; color: #fff; }
+
+.badge-condition-excellent { background: #10B981; color: #fff; }
+.badge-condition-good { background: #3B82F6; color: #fff; }
+.badge-condition-acceptable { background: #F59E0B; color: #fff; }
+
+.spinner {
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #00B4D8;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

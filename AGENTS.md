@@ -1,7 +1,7 @@
 # AGENTS.md — Sanad (سَنَد)
 
 ## Project status
-Zero code written. Only planning docs exist. Build order = phase order in `milestone.md`.
+Phase 0 (Setup & Architecture) done. Phase 1 in progress. Build order = phase order in `milestone.md`.
 
 ## Source of truth hierarchy
 1. `PRD.md` — product requirements, exact SQL (§9.2), design tokens (§11.2), 21 governorates (§17.1), 4 medical categories (§17.2)
@@ -13,7 +13,7 @@ Zero code written. Only planning docs exist. Build order = phase order in `miles
 ## Stack
 - **PHP** — no Laravel/Symfony. Procedural + OOP. PDO prepared statements for all queries.
 - **JavaScript** — vanilla ES6+. No React/Vue/jQuery.
-- **CSS** — no Bootstrap/Tailwind. Custom variables, Flexbox, Grid, glassmorphism.
+- **CSS** — Tailwind CSS (Play CDN) + custom `style.css` supplement. Glassmorphism via CSS.
 - **DB** — MySQL via XAMPP/WAMP, auto-setup on first run (`CREATE DATABASE IF NOT EXISTS`, `CREATE TABLE IF NOT EXISTS` in `includes/db.php`).
 
 ## File layout

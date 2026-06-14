@@ -16,35 +16,35 @@
 ## Phase 0 — Setup & Architecture (Week 1)
 
 ### 0.1 Directory Structure
-- [ ] Create root files: `index.php`, `login.php`, `register.php`, `logout.php`, `marketplace.php`, `device.php`, `add-device.php`, `request.php`, `dashboard-donor.php`, `dashboard-beneficiary.php`
-- [ ] Create `admin/` subdirectory
-- [ ] Create `includes/` subdirectory
-- [ ] Create `assets/css/`, `assets/js/`, `assets/images/` subdirectories
-- [ ] Create `uploads/devices/` and `uploads/medical-reports/` subdirectories
+- [x] Create root files: `index.php`, `login.php`, `register.php`, `logout.php`, `marketplace.php`, `device.php`, `add-device.php`, `request.php`, `dashboard-donor.php`, `dashboard-beneficiary.php`
+- [x] Create `admin/` subdirectory
+- [x] Create `includes/` subdirectory
+- [x] Create `assets/css/`, `assets/js/`, `assets/images/` subdirectories
+- [x] Create `uploads/devices/` and `uploads/medical-reports/` subdirectories
 
 ### 0.2 Database Auto-Setup
-- [ ] Create `includes/db.php` — `CREATE DATABASE IF NOT EXISTS sanad_db`, `USE sanad_db`, `CREATE TABLE IF NOT EXISTS` for all 4 tables (`users`, `devices`, `device_photos`, `requests`) with exact SQL from PRD §9.2
+- [x] Create `includes/db.php` — `CREATE DATABASE IF NOT EXISTS sanad_db`, `USE sanad_db`, `CREATE TABLE IF NOT EXISTS` for all 4 tables (`users`, `devices`, `device_photos`, `requests`) with exact SQL from PRD §9.2
 
 ### 0.3 Configuration
-- [ ] Create `includes/config.php` — define constants: DB_HOST, DB_USER, DB_PASS, DB_NAME, UPLOAD_MAX_SIZE, ALLOWED_EXTENSIONS, GOOGLE_MAPS_API_KEY, CSRF_TOKEN_LIFETIME
+- [x] Create `includes/config.php` — define constants: DB_HOST, DB_USER, DB_PASS, DB_NAME, UPLOAD_MAX_SIZE, ALLOWED_EXTENSIONS, GOOGLE_MAPS_API_KEY, CSRF_TOKEN_LIFETIME
 
 ### 0.4 Helper Functions
-- [ ] Create `includes/functions.php` — UUID v4 generator
-- [ ] Add input sanitization helpers (`htmlspecialchars`, `trim`, `strip_tags`)
-- [ ] Add CSRF token generation + validation helpers
-- [ ] Add file MIME check wrapper (`finfo_file()` + whitelist)
+- [x] Create `includes/functions.php` — UUID v4 generator
+- [x] Add input sanitization helpers (`htmlspecialchars`, `trim`, `strip_tags`)
+- [x] Add CSRF token generation + validation helpers
+- [x] Add file MIME check wrapper (`finfo_file()` + whitelist)
 
 ### 0.5 Base CSS
-- [ ] Create `assets/css/style.css` — `:root` variable system (colors, radii, shadows, font)
-- [ ] Add CSS reset / normalize
-- [ ] Import Tajawal Google Font
-- [ ] Set up base RTL layout (`dir="rtl"`, `lang="ar"`)
-- [ ] Define body typography
+- [x] Create `assets/css/style.css` — `:root` variable system (colors, radii, shadows, font)
+- [x] Add CSS reset / normalize
+- [x] Import Tajawal Google Font
+- [x] Set up base RTL layout (`dir="rtl"`, `lang="ar"`)
+- [x] Define body typography
 
 ### 0.6 Protection & Assets
-- [ ] Create `uploads/medical-reports/.htaccess` — `Deny from all`
-- [ ] Create `assets/images/map-fallback.png` — placeholder image
-- [ ] **Verify:** Load any PHP file → DB + all tables created automatically. CSS variables apply to a test element.
+- [x] Create `uploads/medical-reports/.htaccess` — `Deny from all`
+- [x] Create `assets/images/map-fallback.png` — placeholder image
+- [x] **Verify:** Load any PHP file → DB + all tables created automatically. CSS variables apply to a test element.
 
 ---
 
