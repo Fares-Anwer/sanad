@@ -6,6 +6,27 @@ require_once __DIR__ . '/includes/auth.php';
 requireRole('beneficiary');
 $currentUser = getCurrentUser();
 $csrf = generateCSRFToken();
+
+$stmt = $pdo->prepare("
+    SELECT r.*, d.name AS device_name
+    FROM requests r
+    JOIN devices d ON d.id = r.device_id
+    WHERE r.beneficiary_id = ?
+    ORDER BY r.created_at DESC
+");
+$stmt->execute([$currentUser['id']]);
+$requests = $stmt->fetchAll();
+
+$statusLabels = [
+    'pending' => 'قيد المراجعة',
+    'approved' => 'تمت الموافقة',
+    'rejected' => 'مرفوض',
+];
+$statusClasses = [
+    'pending' => 'status-pending',
+    'approved' => 'status-approved',
+    'rejected' => 'status-rejected',
+];
 ?><!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
@@ -41,18 +62,49 @@ $csrf = generateCSRFToken();
 <body class="font-tajawal bg-bg text-text-dark min-h-screen">
   <div class="max-w-4xl mx-auto p-6 fade-in">
     <div class="flex items-center justify-between mb-8">
-      <h1 class="text-2xl font-bold">مرحباً، <?= htmlspecialchars($currentUser['full_name']) ?></h1>
+      <div>
+        <h1 class="text-2xl font-bold">مرحباً، <?= htmlspecialchars($currentUser['full_name']) ?></h1>
+        <p class="text-text-muted text-sm mt-1">لوحة طلباتي</p>
+      </div>
       <a href="logout.php" class="text-red-500 hover:text-red-700 transition text-sm">تسجيل الخروج</a>
     </div>
 
-    <div class="glass rounded-2xl p-8 text-center">
-      <p class="text-text-muted text-lg mb-6">سيتم إضافة طلباتك هنا قريباً</p>
-      <div class="flex gap-4 justify-center">
-        <a href="marketplace.php" class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+    <?php if (empty($requests)): ?>
+      <div class="glass rounded-2xl p-8 text-center">
+        <p class="text-text-muted text-lg mb-2">لا توجد طلبات بعد</p>
+        <p class="text-text-muted text-sm mb-6">تصفح الأجهزة المتاحة في السوق وقدم طلبك للحصول على الدعم</p>
+        <a href="marketplace.php" class="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
           تصفح الأجهزة
         </a>
       </div>
-    </div>
+    <?php else: ?>
+      <div class="mb-6">
+        <a href="marketplace.php" class="text-primary hover:text-primary-dark font-semibold text-sm transition">&larr; العودة إلى السوق</a>
+      </div>
+
+      <div class="space-y-4">
+        <?php foreach ($requests as $req): ?>
+          <div class="glass rounded-2xl p-4 card-hover">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex-1 min-w-0">
+                <a href="device.php?id=<?= $req['device_id'] ?>" class="text-lg font-semibold text-text-dark hover:text-primary transition">
+                  <?= htmlspecialchars($req['device_name']) ?>
+                </a>
+                <p class="text-text-muted text-sm mt-1">تاريخ الطلب: <?= date('Y/m/d', strtotime($req['created_at'])) ?></p>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap <?= $statusClasses[$req['status']] ?>">
+                <?= $statusLabels[$req['status']] ?>
+              </span>
+            </div>
+            <?php if ($req['status'] === 'rejected' && $req['rejection_reason']): ?>
+              <div class="mt-3 text-sm text-red-600 bg-red-50 rounded-xl p-3">
+                <span class="font-semibold">سبب الرفض:</span> <?= htmlspecialchars($req['rejection_reason']) ?>
+              </div>
+            <?php endif; ?>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
   </div>
 </body>
 </html>

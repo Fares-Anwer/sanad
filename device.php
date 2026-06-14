@@ -215,7 +215,7 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
 
         <div class="mt-6 space-y-3">
           <?php if ($isBeneficiary && $device['status'] === 'active'): ?>
-            <a href="request.php?device_id=<?= $device['id'] ?>" class="block text-center bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold transition-all shadow-lg">طلب هذا الجهاز</a>
+            <button type="button" id="requestBtn" onclick="openRequestModal()" class="block w-full text-center bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold transition-all shadow-lg cursor-pointer">طلب هذا الجهاز</button>
           <?php endif; ?>
           <?php if ($isBeneficiary && $device['status'] !== 'active'): ?>
             <button disabled class="block w-full text-center bg-gray-300 text-gray-500 py-3 rounded-xl font-semibold cursor-not-allowed">الجهاز غير متاح حالياً</button>
@@ -232,5 +232,104 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
     function switchPhoto(src) { mainPhoto.src = src; }
   </script>
   <script src="assets/js/maps.js"></script>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-green-50 text-green-700 border border-green-200 px-6 py-4 rounded-xl shadow-lg fade-in"></div>
+
+<!-- Request Modal -->
+<div id="requestModalOverlay" onclick="closeRequestModalOutside(event)" class="fixed inset-0 z-50 hidden items-center justify-center" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
+  <div onclick="event.stopPropagation()" class="glass rounded-2xl p-6 w-full max-w-lg mx-4 shadow-2xl fade-in">
+    <h2 class="text-xl font-bold mb-4">طلب الجهاز</h2>
+    <form id="requestForm">
+      <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
+      <input type="hidden" name="device_id" value="<?= $device['id'] ?>">
+
+      <div class="mb-4">
+        <label for="case_description" class="block text-sm font-semibold text-text-dark mb-1">وصف الحالة</label>
+        <textarea id="case_description" name="case_description" required minlength="50" maxlength="2000" rows="4" placeholder="اشرح حالتك الطبية واحتياجك للجهاز (50 حرفاً على الأقل)" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-y"></textarea>
+        <div class="flex justify-between mt-1 text-xs text-text-muted">
+          <span id="caseDescCount">0</span>
+          <span>2000</span>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-semibold text-text-dark mb-1">تقرير طبي</label>
+        <input type="file" id="medical_report" name="medical_report" accept=".jpg,.jpeg,.png,.pdf" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-white file:font-semibold file:cursor-pointer file:hover:bg-primary-dark">
+        <p class="text-xs text-text-muted mt-1">يرجى رفع تقرير طبي يوضح حالتك الصحية</p>
+      </div>
+
+      <div id="requestModalError" class="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-4 hidden border border-red-200"></div>
+
+      <div class="flex gap-3">
+        <button type="button" onclick="closeRequestModal()" class="flex-1 border border-gray-300 text-text-dark py-3 rounded-xl font-semibold transition-all hover:bg-gray-50">إلغاء</button>
+        <button type="submit" id="requestSubmitBtn" class="flex-1 bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-semibold transition-all shadow-lg">إرسال الطلب</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function openRequestModal() {
+  document.getElementById('requestModalOverlay').classList.remove('hidden');
+  document.getElementById('requestModalOverlay').classList.add('flex');
+  document.getElementById('requestModalError').classList.add('hidden');
+  document.getElementById('requestForm').reset();
+  document.getElementById('caseDescCount').textContent = '0';
+}
+function closeRequestModal() {
+  document.getElementById('requestModalOverlay').classList.add('hidden');
+  document.getElementById('requestModalOverlay').classList.remove('flex');
+}
+function closeRequestModalOutside(e) {
+  if (e.target === e.currentTarget) closeRequestModal();
+}
+function showToast(msg) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.remove('hidden');
+  setTimeout(function() { el.classList.add('hidden'); }, 4000);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var caseDesc = document.getElementById('case_description');
+  if (caseDesc) {
+    caseDesc.addEventListener('input', function() {
+      document.getElementById('caseDescCount').textContent = this.value.length;
+    });
+  }
+  document.getElementById('requestForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var errorEl = document.getElementById('requestModalError');
+    errorEl.classList.add('hidden');
+    var submitBtn = document.getElementById('requestSubmitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'جاري الإرسال...';
+    var formData = new FormData(this);
+    fetch('request.php', { method: 'POST', body: formData })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'إرسال الطلب';
+        if (data.success) {
+          closeRequestModal();
+          var btn = document.getElementById('requestBtn');
+          if (btn) {
+            btn.outerHTML = '<button disabled class="block w-full text-center bg-gray-300 text-gray-500 py-3 rounded-xl font-semibold cursor-not-allowed">الجهاز غير متاح حالياً</button>';
+          }
+          showToast('تم إرسال طلبك بنجاح! سيتم مراجعته من قبل الإدارة.');
+        } else {
+          errorEl.textContent = data.error || 'حدث خطأ غير متوقع';
+          errorEl.classList.remove('hidden');
+        }
+      })
+      .catch(function() {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'إرسال الطلب';
+        errorEl.textContent = 'حدث خطأ في الاتصال. حاول مرة أخرى.';
+        errorEl.classList.remove('hidden');
+      });
+  });
+});
+</script>
 </body>
 </html>

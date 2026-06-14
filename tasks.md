@@ -160,36 +160,36 @@
 ## Phase 4 — Request System (Weeks 4–5)
 
 ### 4.1 Request Modal
-- [ ] Add glassmorphism modal to `device.php` (backdrop-filter: blur(12px), semi-transparent bg)
-- [ ] Opens on "Request This Device" click
-- [ ] Fields: case description (textarea, min 50 chars), medical document upload (file input, accept .jpg/.jpeg/.png/.pdf)
-- [ ] Cancel + Submit buttons
+- [x] Add glassmorphism modal to `device.php` (backdrop-filter: blur(12px), semi-transparent bg)
+- [x] Opens on "Request This Device" click
+- [x] Fields: case description (textarea, min 50 chars), medical document upload (file input, accept .jpg/.jpeg/.png/.pdf)
+- [x] Cancel + Submit buttons
 
 ### 4.2 Request Submission
-- [ ] Create `request.php` — POST handler
-- [ ] Validate beneficiary is logged in
-- [ ] Check device is active (not already under request)
-- [ ] Validate form inputs
-- [ ] Upload medical doc to `uploads/medical-reports/` (UUID v4 rename)
-- [ ] Insert into `requests` table (status = `pending`)
-- [ ] Update device status to `under_request_review`
-- [ ] Return success/failure JSON
+- [x] Create `request.php` — POST handler
+- [x] Validate beneficiary is logged in
+- [x] Check device is active (not already under request)
+- [x] Validate form inputs
+- [x] Upload medical doc to `uploads/medical-reports/` (UUID v4 rename)
+- [x] Insert into `requests` table (status = `pending`)
+- [x] Update device status to `under_request_review`
+- [x] Return success/failure JSON
 
 ### 4.3 Business Rule Enforcement
-- [ ] Check no other active `pending` or `approved` request exists for this device
-- [ ] If rejected request exists, allow new request (device is `active` again)
-- [ ] Return error if device not `active`
+- [x] Check no other active `pending` or `approved` request exists for this device
+- [x] If rejected request exists, allow new request (device is `active` again)
+- [x] Return error if device not `active`
 
 ### 4.4 Beneficiary Dashboard
-- [ ] Create `dashboard-beneficiary.php` — guard: beneficiary
-- [ ] List all user's requests with status badges (Pending / Approved / Rejected)
-- [ ] Show device name, date submitted
-- [ ] Show rejection reason if rejected
+- [x] Create `dashboard-beneficiary.php` — guard: beneficiary
+- [x] List all user's requests with status badges (Pending / Approved / Rejected)
+- [x] Show device name, date submitted
+- [x] Show rejection reason if rejected
 
 ### 4.5 Medical Document Protection
-- [ ] Block direct access to `uploads/medical-reports/` via `.htaccess`
-- [ ] Create `serve-medical-doc.php` — authenticated endpoint (admin only)
-- [ ] Endpoint reads file and outputs with proper Content-Type header
+- [x] Block direct access to `uploads/medical-reports/` via `.htaccess`
+- [x] Create `serve-medical-doc.php` — authenticated endpoint (admin only)
+- [x] Endpoint reads file and outputs with proper Content-Type header
 - [ ] **Verify:** Login as beneficiary → browse active device → click Request → modal opens → fill description + upload medical doc → submit → device disappears from marketplace. Check beneficiary dashboard → shows "Pending". Try requesting same device again as different beneficiary → error. Admin endpoint serves medical doc after auth check.
 
 ---
