@@ -218,6 +218,7 @@ if (isset($_SESSION['add_device_success'])) {
       }
     }
   </script>
+  <link rel="stylesheet" href="<?= LEAFLET_CSS ?>">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="font-tajawal bg-bg text-text-dark min-h-screen">
@@ -330,10 +331,24 @@ if (isset($_SESSION['add_device_success'])) {
 
       <div class="mb-5">
         <span class="block text-sm font-semibold text-text-dark mb-1">الموقع على الخريطة</span>
+        <div class="relative mb-2">
+          <input type="text" id="locationSearch" placeholder="ابحث عن موقع..." class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm">
+          <div id="searchResults" class="absolute z-50 top-full mt-1 left-0 right-0 bg-white border border-gray-200 rounded-xl shadow-lg max-h-48 overflow-y-auto hidden"></div>
+        </div>
         <div id="mapPicker" class="w-full rounded-xl bg-gray-100" style="height: 300px;"></div>
         <input type="hidden" name="latitude" id="latitude" value="">
         <input type="hidden" name="longitude" id="longitude" value="">
-        <p class="text-xs text-text-muted mt-1">يمكنك تحديد الموقع على الخريطة (اختياري)</p>
+        <div id="manualCoords" class="hidden grid grid-cols-2 gap-3 mt-3">
+          <div>
+            <label for="manualLat" class="block text-xs font-semibold text-text-muted mb-1">خط العرض</label>
+            <input type="text" id="manualLat" class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm" placeholder="مثال: 15.5527">
+          </div>
+          <div>
+            <label for="manualLng" class="block text-xs font-semibold text-text-muted mb-1">خط الطول</label>
+            <input type="text" id="manualLng" class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm" placeholder="مثال: 48.5164">
+          </div>
+        </div>
+        <p class="text-xs text-text-muted mt-1">ابحث عن موقعك أو انقر على الخريطة لتحديد الموقع (اختياري)</p>
       </div>
 
       <div class="mb-6">
@@ -428,7 +443,7 @@ if (isset($_SESSION['add_device_success'])) {
   });
 </script>
 <script src="assets/js/main.js"></script>
-<script>var GOOGLE_MAPS_API_KEY = '<?= GOOGLE_MAPS_API_KEY ?>';</script>
+<script src="<?= LEAFLET_JS ?>"></script>
 <script src="assets/js/maps.js"></script>
 <script src="assets/js/validation.js"></script>
 </body>

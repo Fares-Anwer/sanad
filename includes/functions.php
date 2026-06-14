@@ -79,6 +79,22 @@ function jsonResponse(array $data, int $statusCode = 200): void {
     exit;
 }
 
+function nominatimGeocode(string $query): ?array {
+    $url = 'https://nominatim.openstreetmap.org/search?q=' . rawurlencode($query) . '&format=json&limit=5&accept-language=ar';
+    $ctx = stream_context_create(['http' => ['header' => "User-Agent: SanadPlatform/1.0\r\n"]]);
+    $result = @file_get_contents($url, false, $ctx);
+    if ($result === false) return null;
+    $data = json_decode($result, true);
+    if (empty($data)) return null;
+    return array_map(function($r) {
+        return ['lat' => $r['lat'], 'lng' => $r['lon'], 'display_name' => $r['display_name']];
+    }, $data);
+}
+
+function getMapLink(float $lat, float $lng): string {
+    return "https://www.google.com/maps?q={$lat},{$lng}";
+}
+
 function getYemenGovernorates(): array {
     return [
         'amanat_al_asimah' => 'أمانة العاصمة',

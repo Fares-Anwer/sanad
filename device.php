@@ -127,9 +127,7 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
       }
     }
   </script>
-  <script>
-    var GOOGLE_MAPS_API_KEY = '<?= GOOGLE_MAPS_API_KEY ?>';
-  </script>
+  <link rel="stylesheet" href="<?= LEAFLET_CSS ?>">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="font-tajawal bg-bg text-text-dark min-h-screen">
@@ -233,6 +231,7 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
     var mainPhoto = document.getElementById('mainPhoto');
     function switchPhoto(src) { mainPhoto.src = src; }
   </script>
+  <script src="<?= LEAFLET_JS ?>"></script>
   <script src="assets/js/maps.js"></script>
 
 <!-- Toast -->
