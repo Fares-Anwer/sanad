@@ -240,23 +240,23 @@
 ## Phase 6 — Communication System (Week 6)
 
 ### 6.1 Helpers
-- [ ] Add `generateWhatsAppUrl($phone, $message)` to `includes/functions.php` — format phone, URL-encode message, return full `wa.me` link
-- [ ] Add `formatYemeniPhone($phone)` to `includes/functions.php` — remove non-digits, prepend 967, remove leading 0
+- [x] Add `generateWhatsAppUrl($phone, $message)` to `includes/functions.php` — format phone, URL-encode message, return full `wa.me` link
+- [x] Add `formatYemeniPhone($phone)` to `includes/functions.php` — remove non-digits, prepend 967, remove leading 0
 
 ### 6.2 Post-Approval Logic
-- [ ] Update `admin/action.php` — on request approve: fetch donor phone + beneficiary name + device name
-- [ ] Format phone with `formatYemeniPhone()`
-- [ ] Store generated WhatsApp URL and tel: link in session or pass to dashboard pages
+- [x] Update `admin/action.php` — on request approve: fetch donor phone + beneficiary name + device name
+- [x] Format phone with `formatYemeniPhone()`
+- [x] Store generated WhatsApp URL and tel: link in session flash data
 
 ### 6.3 Beneficiary Contact Display
-- [ ] Update `dashboard-beneficiary.php` — for approved requests: show donor name + governorate
-- [ ] Add "Call Donor" button (`tel:+967XXX`)
-- [ ] Add "WhatsApp" button (`https://wa.me/967XXX?text=...`)
-- [ ] Pre-compose message from PRD §7.5.2
+- [x] Update `dashboard-beneficiary.php` — for approved requests: show donor name + governorate
+- [x] Add "Call Donor" button (`tel:+967XXX`)
+- [x] Add "WhatsApp" button (`https://wa.me/967XXX?text=...`)
+- [x] Pre-compose message from PRD §7.5.2
 
 ### 6.4 Donor Info Display
-- [ ] Update `dashboard-donor.php` — for loaned devices: show beneficiary name + governorate (no phone)
-- [ ] Show device status = "Currently Loaned"
+- [x] Update `dashboard-donor.php` — for loaned devices: show beneficiary name + governorate (no phone)
+- [x] Show device status = "معار" (Currently Loaned)
 - [ ] **Verify:** Approve a request as admin → login as beneficiary → see contact buttons → click WhatsApp → opens `wa.me` with pre-filled message. Login as donor → see beneficiary name + governorate on dashboard.
 
 ---

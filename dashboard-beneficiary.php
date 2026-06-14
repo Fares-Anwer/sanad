@@ -100,6 +100,36 @@ $statusClasses = [
               <div class="mt-3 text-sm text-red-600 bg-red-50 rounded-xl p-3">
                 <span class="font-semibold">سبب الرفض:</span> <?= htmlspecialchars($req['rejection_reason']) ?>
               </div>
+            <?php elseif ($req['status'] === 'approved'):
+              $stmt = $pdo->prepare("SELECT u.full_name, u.governorate, u.phone
+                                     FROM requests r
+                                     JOIN devices d ON r.device_id = d.id
+                                     JOIN users u ON d.donor_id = u.id
+                                     WHERE r.id = ?");
+              $stmt->execute([$req['id']]);
+              $donor = $stmt->fetch();
+              if ($donor):
+                $donorPhone = formatYemeniPhone($donor['phone']);
+                $deviceName = htmlspecialchars($req['device_name']);
+                $beneficiaryName = htmlspecialchars($currentUser['full_name']);
+                $donorName = htmlspecialchars($donor['full_name']);
+                $governorates = getYemenGovernorates();
+                $govLabel = $governorates[$donor['governorate']] ?? htmlspecialchars($donor['governorate']);
+                $waMsg = "السلام عليكم، أنا {$beneficiaryName}، تواصلت معكم بخصوص جهاز {$deviceName} حسب إعلانكم في منصة سند. أرجو الإفادة عن كيفية الاستلام.";
+                $waUrl = generateWhatsAppUrl($donorPhone, $waMsg);
+              ?>
+              <div class="mt-3 bg-white/50 rounded-xl p-3 border border-primary/20">
+                <p class="text-sm text-text-dark"><span class="font-semibold">المتبرع:</span> <?= $donorName ?> — <?= $govLabel ?></p>
+                <div class="flex gap-2 mt-2">
+                  <a href="tel:+<?= $donorPhone ?>" class="flex-1 inline-flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+                    <i class="fas fa-phone"></i> اتصل بالمتبرع
+                  </a>
+                  <a href="<?= $waUrl ?>" target="_blank" class="flex-1 inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+                    <i class="fab fa-whatsapp"></i> واتساب
+                  </a>
+                </div>
+              </div>
+              <?php endif; ?>
             <?php endif; ?>
           </div>
         <?php endforeach; ?>

@@ -74,6 +74,31 @@ try {
 
     $pdo->commit();
 
+    if ($action === 'approve_request') {
+        $stmt = $pdo->prepare("SELECT d.name AS device_name, d.donor_id, r.beneficiary_id,
+                                      u_donor.phone AS donor_phone, u_ben.full_name AS beneficiary_name
+                               FROM requests r
+                               JOIN devices d ON r.device_id = d.id
+                               JOIN users u_donor ON d.donor_id = u_donor.id
+                               JOIN users u_ben ON r.beneficiary_id = u_ben.id
+                               WHERE r.id = ?");
+        $stmt->execute([$entityId]);
+        $info = $stmt->fetch();
+
+        if ($info) {
+            $formattedPhone = formatYemeniPhone($info['donor_phone']);
+            $deviceName = htmlspecialchars($info['device_name']);
+            $beneficiaryName = htmlspecialchars($info['beneficiary_name']);
+            $message = "السلام عليكم، أنا {$beneficiaryName}، تواصلت معكم بخصوص جهاز {$deviceName} حسب إعلانكم في منصة سند. أرجو الإفادة عن كيفية الاستلام.";
+            $whatsappUrl = generateWhatsAppUrl($formattedPhone, $message);
+            $_SESSION['flash_contact'] = [
+                'donor_phone' => $info['donor_phone'],
+                'whatsapp_url' => $whatsappUrl,
+                'tel_url' => 'tel:+' . $formattedPhone,
+            ];
+        }
+    }
+
     if ($isDeviceAction) {
         redirect('listings.php?msg=' . urlencode('تم تحديث حالة الجهاز بنجاح'));
     } else {

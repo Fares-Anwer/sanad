@@ -51,6 +51,7 @@ function isAllowedExtension(string $filename): bool {
 }
 
 function formatYemeniPhone(string $phone): string {
+    if (empty($phone)) return '';
     $phone = preg_replace('/[^0-9]/', '', $phone);
     $phone = ltrim($phone, '0');
     if (substr($phone, 0, 3) !== '967') {
@@ -61,6 +62,7 @@ function formatYemeniPhone(string $phone): string {
 
 function generateWhatsAppUrl(string $phone, string $message): string {
     $phone = formatYemeniPhone($phone);
+    if (empty($phone)) return '';
     $message = rawurlencode($message);
     return "https://wa.me/{$phone}?text={$message}";
 }

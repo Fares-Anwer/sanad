@@ -11,6 +11,8 @@ $stmt = $pdo->prepare("SELECT * FROM devices WHERE donor_id = ? ORDER BY created
 $stmt->execute([$currentUser['id']]);
 $devices = $stmt->fetchAll();
 
+$stmtBeneficiary = $pdo->prepare("SELECT u.full_name, u.governorate FROM requests r JOIN users u ON r.beneficiary_id = u.id WHERE r.device_id = ? AND r.status = 'approved' LIMIT 1");
+
 $categoryLabels = [
     'respiratory' => 'جهاز تنفسي',
     'mobility' => 'جهاز حركي',
@@ -22,7 +24,7 @@ $statusLabels = [
     'pending_review' => 'قيد المراجعة',
     'active' => 'نشط',
     'under_request_review' => 'قيد طلب الإعارة',
-    'loaned' => 'معار حالياً',
+    'loaned' => 'معار',
     'rejected' => 'مرفوض',
 ];
 
@@ -114,6 +116,14 @@ $statusClasses = [
                 <span class="px-3 py-1 rounded-full text-xs font-semibold <?= $statusClasses[$device['status']] ?>">
                   <?= $statusLabels[$device['status']] ?? $device['status'] ?>
                 </span>
+                <?php if ($device['status'] === 'loaned'): ?>
+                  <?php $stmtBeneficiary->execute([$device['id']]); $info = $stmtBeneficiary->fetch(); if ($info): ?>
+                    <div class="mt-2 space-y-1 text-xs text-text-muted">
+                      <div>المستفيد: <?= htmlspecialchars($info['full_name']) ?></div>
+                      <div>المحافظة: <?= htmlspecialchars($info['governorate']) ?></div>
+                    </div>
+                  <?php endif; ?>
+                <?php endif; ?>
               </td>
               <td class="py-3 text-text-muted text-sm"><?= date('Y-m-d', strtotime($device['created_at'])) ?></td>
               <td class="py-3 text-sm">
