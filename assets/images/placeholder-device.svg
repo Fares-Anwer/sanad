@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="12" fill="#E5E7EB"/>
+  <path d="M100 60c-22 0-40 18-40 40s18 40 40 40 40-18 40-40-18-40-40-40zm0 72c-17.6 0-32-14.4-32-32s14.4-32 32-32 32 14.4 32 32-14.4 32-32 32z" fill="#9CA3AF"/>
+  <path d="M108 92h-4v-8a4 4 0 0 0-8 0v8h-8a4 4 0 0 0 0 8h8v8a4 4 0 0 0 8 0v-8h4a4 4 0 0 0 0-8z" fill="#9CA3AF"/>
+  <text x="100" y="148" text-anchor="middle" fill="#9CA3AF" font-family="Tajawal, sans-serif" font-size="12">لا توجد صورة</text>
+</svg>

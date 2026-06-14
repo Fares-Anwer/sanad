@@ -103,7 +103,7 @@ $statusLabels = [
             <tr class="border-b border-gray-100 hover:bg-white/50 transition">
               <td class="py-3 font-medium"><?= htmlspecialchars($r['device_name']) ?></td>
               <td class="py-3"><?= htmlspecialchars($r['beneficiary_name']) ?></td>
-              <td class="py-3 text-text-muted text-sm"><?= htmlspecialchars($r['beneficiary_governorate']) ?></td>
+              <td class="py-3 text-text-muted text-sm"><?php $govs = getYemenGovernorates(); echo htmlspecialchars($govs[$r['beneficiary_governorate']] ?? $r['beneficiary_governorate']); ?></td>
               <td class="py-3 text-text-muted text-sm"><?= date('Y/m/d', strtotime($r['created_at'])) ?></td>
               <td class="py-3">
                 <span class="status-pending px-3 py-1 rounded-full text-xs font-semibold">قيد الانتظار</span>

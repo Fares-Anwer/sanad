@@ -39,8 +39,11 @@ try {
         `longitude`         DECIMAL(11,8) DEFAULT NULL,
         `status`            ENUM('pending_review','active','under_request_review','loaned','rejected') NOT NULL DEFAULT 'pending_review',
         `rejection_reason`  TEXT DEFAULT NULL,
+        `admin_reviewed_by` INT UNSIGNED DEFAULT NULL,
+        `admin_reviewed_at` DATETIME DEFAULT NULL,
         `created_at`        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (`donor_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+        FOREIGN KEY (`donor_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+        FOREIGN KEY (`admin_reviewed_by`) REFERENCES `users`(`id`) ON DELETE SET NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
     $pdo->exec("CREATE TABLE IF NOT EXISTS `device_photos` (

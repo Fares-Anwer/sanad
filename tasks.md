@@ -26,7 +26,7 @@
 - [x] Create `includes/db.php` — `CREATE DATABASE IF NOT EXISTS sanad_db`, `USE sanad_db`, `CREATE TABLE IF NOT EXISTS` for all 4 tables (`users`, `devices`, `device_photos`, `requests`) with exact SQL from PRD §9.2
 
 ### 0.3 Configuration
-- [x] Create `includes/config.php` — define constants: DB_HOST, DB_USER, DB_PASS, DB_NAME, UPLOAD_MAX_SIZE, ALLOWED_EXTENSIONS, GOOGLE_MAPS_API_KEY, CSRF_TOKEN_LIFETIME
+- [x] Create `includes/config.php` — define constants: DB_HOST, DB_USER, DB_PASS, DB_NAME, UPLOAD_MAX_SIZE, ALLOWED_EXTENSIONS, CSRF_TOKEN_LIFETIME (Google Maps replaced by Leaflet + OSM)
 
 ### 0.4 Helper Functions
 - [x] Create `includes/functions.php` — UUID v4 generator
@@ -105,14 +105,15 @@
 ### 2.4 Device Detail Page
 - [x] Create `device.php?id=X` — full photo gallery (swipeable on mobile via touch events)
 - [x] Show complete description, condition + offer type details
-- [x] Show location + embedded Google Map (read-only)
+- [x] Show location + embedded Leaflet/OpenStreetMap (read-only, no API key)
 - [x] Add "Request This Device" button
 - [x] Add status indicator
 
 ### 2.5 Maps Display
-- [x] Implement in `assets/js/maps.js` — `initMap()` centered on Yemen (15.5527, 48.5164, zoom 6)
+- [x] Implement in `assets/js/maps.js` — `initMap()` using Leaflet.js centered on Yemen (15.5527, 48.5164, zoom 6)
 - [x] Place marker at device lat/lng
-- [x] Handle missing API key gracefully — show fallback image + coordinates as text
+- [x] Handle gracefully when Leaflet fails to load — show fallback image + coordinates as text
+- [x] Location search via Nominatim (free, no API key) + click-to-place marker on add-device.php
 - [ ] **Verify:** Browse devices as unauthenticated user. See all device cards. Type in search → cards filter. Select governorate → district dropdown populates. Click device → detail page loads with map.
 
 ---
@@ -127,9 +128,11 @@
 - [x] Add photo upload (multiple, 1–6 files)
 - [x] Implement server-side validation for all fields
 
-### 3.2 Map Picker
-- [x] Implement in `assets/js/maps.js` — interactive map on `add-device.php`
-- [x] Click to place marker, click again to remove
+### 3.2 Map Picker (Leaflet + Nominatim)
+- [x] Implement in `assets/js/maps.js` — interactive Leaflet map on `add-device.php`
+- [x] Search box with Nominatim geocoding (free, no API key)
+- [x] Click to place marker, drag to adjust
+- [x] Manual coordinate fallback when Leaflet fails
 - [x] Capture lat/lng into hidden form fields
 - [x] Default center: Yemen
 
@@ -315,8 +318,8 @@
 - [x] Verify PDO prepared statements prevent SQL injection — ZERO raw SQL concatenation ✅
 
 ### 8.3 Static Map Fallback
-- [x] Test device detail page without Google Maps API key — fallback image + coordinates display correctly ✅
-- [x] add-device.php missing GOOGLE_MAPS_API_KEY JS var — **FIXED** (was cosmetic console error)
+- [x] Device detail page fallback — Leaflet fails gracefully → fallback image + coordinates ✅
+- [x] add-device.php map picker fallback — Leaflet fails → manual coordinate inputs shown ✅
 
 ### 8.4 Setup Notes
 - [x] Create `setup-notes.txt` — PHP.ini requirements, XAMPP/WAMP steps, DB config, Maps API instructions, troubleshooting ✅
@@ -331,7 +334,7 @@
 |---|----------|------|-------|-----|
 | 1 | CRITICAL | `device.php:260` | Input `name="medical_report"` mismatched with server check `$_FILES['medical_doc']` in `request.php:56` — beneficiaries could never submit a request | Changed to `name="medical_doc"` (and id) |
 | 2 | Minor | `register.php:78` | `$_SESSION['register_success'] = true` — login.php displayed boolean as `"1"` | Changed to Arabic string message |
-| 3 | Minor | `add-device.php:431` | Missing `var GOOGLE_MAPS_API_KEY` JS variable before loading maps.js — caused ReferenceError in console | Added inline script with the constant
+| 3 | Fixed | `add-device.php` | Missing `var GOOGLE_MAPS_API_KEY` — obsolete since replaced Google Maps with Leaflet+OSM (no API key needed) | Removed entirely
 
 ---
 
@@ -361,7 +364,7 @@
 ### Frontend Assets
 - [x] `assets/css/style.css` — Complete CSS with variable system
 - [x] `assets/js/main.js` — Core JavaScript (dynamic filtering, modals)
-- [x] `assets/js/maps.js` — Google Maps integration
+- [x] `assets/js/maps.js` — Leaflet/OpenStreetMap integration (free, no API key)
 - [x] `assets/js/validation.js` — Client-side validation
 - [x] Glassmorphism modal styles (in style.css)
 - [x] `assets/images/logo.svg` + `assets/images/favicon.svg`

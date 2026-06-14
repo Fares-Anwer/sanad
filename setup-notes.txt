@@ -1,11 +1,11 @@
-================================================================================
-                       سند (Sanad) — Setup Notes
+﻿================================================================================
+                       Ø³Ù†Ø¯ (Sanad) â€” Setup Notes
 ================================================================================
 Version: 1.0.0
 Last Updated: 2025
 
 This document covers PHP.ini configuration, XAMPP/WAMP installation steps,
-database setup, Google Maps API key configuration, file upload directory
+database setup, file upload directory
 permissions, and common troubleshooting.
 
 ================================================================================
@@ -38,30 +38,30 @@ Verify settings: Create a phpinfo.php file in the web root with
 2. XAMPP/WAMP SETUP STEPS
 ================================================================================
 
-Step 2.1 — Install XAMPP or WAMP
+Step 2.1 â€” Install XAMPP or WAMP
   - Download XAMPP from https://www.apachefriends.org/
   - Download WAMP from https://www.wampserver.com/
   - Run installer with default options
 
-Step 2.2 — Start Apache + MySQL
-  - XAMPP Control Panel → Start Apache → Start MySQL
-  - WAMP → Left-click tray icon → Start all services
-  - Verify: Open browser to http://localhost/ — should show dashboard
+Step 2.2 â€” Start Apache + MySQL
+  - XAMPP Control Panel â†’ Start Apache â†’ Start MySQL
+  - WAMP â†’ Left-click tray icon â†’ Start all services
+  - Verify: Open browser to http://localhost/ â€” should show dashboard
 
-Step 2.3 — Copy Project to htdocs
+Step 2.3 â€” Copy Project to htdocs
   - Copy the entire /sanad/ folder into:
     - XAMPP: C:\xamppl\htdocs\sanad\
     - WAMP:  C:\wamp64\www\sanad\
   - Verify: Open browser to http://localhost/sanad/
 
-Step 2.4 (Optional) — Configure Virtual Host
-  XAMPP — Edit C:\xamppl\apache\conf\extra\httpd-vhosts.conf:
+Step 2.4 (Optional) â€” Configure Virtual Host
+  XAMPP â€” Edit C:\xamppl\apache\conf\extra\httpd-vhosts.conf:
     <VirtualHost *:80>
         DocumentRoot "C:/xamppl/htdocs/sanad"
         ServerName sanad.local
     </VirtualHost>
 
-  WAMP — Edit C:\wamp64\bin\apache\apache[version]\conf\extra\httpd-vhosts.conf
+  WAMP â€” Edit C:\wamp64\bin\apache\apache[version]\conf\extra\httpd-vhosts.conf
   (similar to above).
 
   Then edit C:\Windows\System32\drivers\etc\hosts:
@@ -76,7 +76,7 @@ Step 2.4 (Optional) — Configure Virtual Host
 3. DATABASE CONFIGURATION
 ================================================================================
 
-Step 3.1 — Edit includes/config.php
+Step 3.1 â€” Edit includes/config.php
 
   The file is located at: sanad/includes/config.php
 
@@ -89,7 +89,7 @@ Step 3.1 — Edit includes/config.php
   For WAMP with password:
     define('DB_PASS', 'your_password_here');
 
-Step 3.2 — Auto-Setup Mechanism
+Step 3.2 â€” Auto-Setup Mechanism
 
   NO manual database import is required. On every page request,
   includes/db.php automatically:
@@ -106,7 +106,7 @@ Step 3.2 — Auto-Setup Mechanism
   If the database already exists with all tables, these queries are no-ops
   and have zero performance impact.
 
-Step 3.3 — Verify Connection
+Step 3.3 â€” Verify Connection
 
   Simply load any page (e.g. http://localhost/sanad/). If you see the
   homepage, the database is connected. If you see an error, check:
@@ -115,54 +115,47 @@ Step 3.3 — Verify Connection
   - No MySQL port conflicts (default: 3306)
 
 ================================================================================
-4. GOOGLE MAPS API KEY
-================================================================================
+4. MAPS — Leaflet.js + OpenStreetMap (FREE, NO API KEY)
 
-The platform uses Google Maps JavaScript API for:
-  - Interactive map picker on add-device.php (donor pins device location)
+The platform uses Leaflet.js (open-source) with OpenStreetMap tiles for:
+  - Interactive map picker on add-device.php (search + click to place marker)
   - Embedded map display on device.php (device detail page)
+  - Location search via Nominatim (free OpenStreetMap geocoding API)
 
-Step 4.1 — Obtain API Key
-  1. Go to https://console.cloud.google.com/
-  2. Create a new project (or select existing)
-  3. Navigate to APIs & Services → Library
-  4. Search for and enable "Maps JavaScript API"
-  5. Go to APIs & Services → Credentials
-  6. Click "Create Credentials" → "API Key"
-  7. Copy the generated key
+NO API key is required. Maps work out of the box with zero configuration.
 
-Step 4.2 — Restrict API Key (Recommended)
-  Under "Application restrictions" → "HTTP referrers (web sites)":
-    - localhost/*
-    - *.sanad.local/*
-    - your-production-domain.com/*
+Step 4.1 — How It Works
+  Map rendering: Leaflet.js loaded from unpkg CDN (free)
+  Map tiles: OpenStreetMap tiles (free, no API key, no usage limits)
+  Geocoding: Nominatim API via includes/geocode.php (free, no API key)
 
-  Under "API restrictions" → "Restrict key":
-    - Select "Maps JavaScript API"
+Step 4.2 — CDN URLs (in includes/config.php)
+  define('LEAFLET_CSS', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+  define('LEAFLET_JS', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js');
 
-Step 4.3 — Paste Key in config.php
-  In includes/config.php, set:
-    define('GOOGLE_MAPS_API_KEY', 'YOUR_API_KEY_HERE');
+Step 4.3 — Fallback Behavior
+  If Leaflet CDN fails to load (e.g. no internet), the platform falls back to:
+  - Device detail page: Static fallback image + coordinates as text
+  - Add device form: Manual coordinate input fields (latitude/longitude)
 
-Step 4.4 — Static Fallback
-  If no API key is configured, the platform gracefully falls back to a
-  static map image at assets/images/map-fallback.png. Coordinates are
-  displayed as text for reference.
+Step 4.4 — View on Google Maps Link
+  After the fallback, a link to "https://www.google.com/maps?q=lat,lng"
+  opens Google Maps in a new tab — this is a free link, NOT an API call.
 
-================================================================================
+===============================================================================
 5. FILE UPLOAD DIRECTORY
 ================================================================================
 
-5.1 — Device Photos Directory
+5.1 â€” Device Photos Directory
   Path: sanad/uploads/devices/
   Permissions: Must be writable by the web server.
     - XAMPP: Already writable (Apache runs as user with full access)
-    - If uploads fail: Right-click uploads/devices/ → Properties → Security
-      → Ensure "IUSR" or "Everyone" has Write permission
+    - If uploads fail: Right-click uploads/devices/ â†’ Properties â†’ Security
+      â†’ Ensure "IUSR" or "Everyone" has Write permission
 
   Public access: Allowed (device photos are displayed on marketplace)
 
-5.2 — Medical Reports Directory
+5.2 â€” Medical Reports Directory
   Path: sanad/uploads/medical-reports/
   Permissions: Must be writable by the web server.
   PROTECTED: Directory contains a .htaccess file:
@@ -174,12 +167,12 @@ Step 4.4 — Static Fallback
     - User is logged in
     - User has admin role
 
-5.3 — Create Directories (if missing)
+5.3 â€” Create Directories (if missing)
   If the uploads directory structure does not exist, create it:
     sanad/
-    └── uploads/
-        ├── devices/           (public — device photos)
-        └── medical-reports/   (protected — medical documents)
+    â””â”€â”€ uploads/
+        â”œâ”€â”€ devices/           (public â€” device photos)
+        â””â”€â”€ medical-reports/   (protected â€” medical documents)
 
 ================================================================================
 6. TROUBLESHOOTING
@@ -192,14 +185,14 @@ PROBLEM: White screen / blank page on all pages
     2. Set: display_errors = On
     3. Set: error_reporting = E_ALL
     4. Restart Apache
-    5. Reload page — error message will appear
+    5. Reload page â€” error message will appear
     6. Common causes: missing extensions (pdo_mysql), syntax errors
 
 PROBLEM: "Database connection failed" error
   CAUSE:  MySQL not running or wrong credentials
   FIX:
     1. Verify MySQL is running: XAMPP/WAMP control panel shows green
-    2. Click "MySQL" → check port (default: 3306)
+    2. Click "MySQL" â†’ check port (default: 3306)
     3. In config.php, verify DB_HOST, DB_USER, DB_PASS
     4. Try connecting via command line:
          mysql -u root -p
@@ -211,8 +204,8 @@ PROBLEM: File upload fails (no error message)
   CAUSE:  File exceeds upload_max_filesize or post_max_size
   FIX:
     1. Check php.ini values (see Section 1)
-    2. upload_max_filesize must be ≥ 10M
-    3. post_max_size must be ≥ upload_max_filesize + 2M (min 12M)
+    2. upload_max_filesize must be â‰¥ 10M
+    3. post_max_size must be â‰¥ upload_max_filesize + 2M (min 12M)
     4. Restart Apache after changes
     5. Try uploading a smaller file (< 1MB) to isolate issue
 
@@ -226,17 +219,19 @@ PROBLEM: File upload fails with "Invalid file type" error
 PROBLEM: "419 Session expired" or CSRF token error
   CAUSE:  Session expired or token mismatch
   FIX:
-    1. Default token lifetime: 7200 seconds (2 hours) — see config.php
+    1. Default token lifetime: 7200 seconds (2 hours) â€” see config.php
     2. Increase: define('CSRF_TOKEN_LIFETIME', 14400);
     3. Clear browser cookies and session data, re-login
 
-PROBLEM: Google Maps not showing
-  CAUSE:  Missing or invalid API key
+PROBLEM: Map not showing (blank gray area)
+  CAUSE:  Leaflet CDN not loading (no internet or CDN blocked)
   FIX:
-    1. Verify GOOGLE_MAPS_API_KEY is set in config.php
-    2. Verify "Maps JavaScript API" is enabled in Google Cloud Console
-    3. Check HTTP referrer restrictions (localhost must be allowed)
-    4. Fallback: Static map image displays without key
+    1. Check that unpkg.com is accessible from your network
+    2. If behind a firewall/proxy, download Leaflet locally:
+       - Download leaflet.js + leaflet.css from https://unpkg.com/leaflet@1.9.4/
+       - Place in assets/js/ and assets/css/ respectively
+       - Update URLs in maps.js and config.php to local paths
+    3. Fallback: Static map image + manual coords will display without Leaflet
 
 PROBLEM: 404 Not Found on admin pages
   CAUSE:  Missing /admin/ subdirectory or incorrect URL
@@ -256,3 +251,4 @@ PROBLEM: Registration fails, "Email already exists"
 ================================================================================
 END OF SETUP NOTES
 ================================================================================
+
