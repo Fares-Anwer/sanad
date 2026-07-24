@@ -94,6 +94,17 @@ $statusClasses = [
 
 <div class="max-w-6xl mx-auto p-6 fade-in">
 
+  <?php if (isset($_GET['msg'])): ?>
+    <div class="mb-6 p-4 rounded-xl bg-green-50 text-green-700 border border-green-200 text-sm font-semibold">
+      <?= htmlspecialchars($_GET['msg']) ?>
+    </div>
+  <?php endif; ?>
+  <?php if (isset($_GET['error'])): ?>
+    <div class="mb-6 p-4 rounded-xl bg-red-50 text-red-600 border border-red-200 text-sm font-semibold">
+      <?= htmlspecialchars($_GET['error']) ?>
+    </div>
+  <?php endif; ?>
+
   <div class="flex items-center justify-between mb-8">
     <h1 class="text-2xl font-bold">مراجعة الأجهزة</h1>
   </div>

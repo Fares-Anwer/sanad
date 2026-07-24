@@ -19,12 +19,12 @@ if (!isset($_POST['csrf_token']) || !validateCSRFToken($_POST['csrf_token'])) {
 
 $action = $_POST['action'] ?? '';
 
-$allowedActions = ['approve_device', 'reject_device', 'approve_request', 'reject_request'];
+$allowedActions = ['approve_device', 'reject_device', 'approve_request', 'reject_request', 'delete_device'];
 if (!in_array($action, $allowedActions)) {
     redirect('../login.php?error=unauthorized');
 }
 
-$isDeviceAction = in_array($action, ['approve_device', 'reject_device']);
+$isDeviceAction = in_array($action, ['approve_device', 'reject_device', 'delete_device']);
 
 if ($isDeviceAction) {
     $entityId = isset($_POST['device_id']) ? (int)$_POST['device_id'] : 0;
@@ -58,6 +58,32 @@ try {
     } elseif ($action === 'reject_device') {
         $stmt = $pdo->prepare("UPDATE devices SET status='rejected', rejection_reason=?, admin_reviewed_by=?, admin_reviewed_at=NOW() WHERE id=?");
         $stmt->execute([$rejectionReason, $adminId, $entityId]);
+    } elseif ($action === 'delete_device') {
+        // 1. Get and delete device photos
+        $photoStmt = $pdo->prepare("SELECT file_path FROM device_photos WHERE device_id = ?");
+        $photoStmt->execute([$entityId]);
+        $devicePhotos = $photoStmt->fetchAll();
+        foreach ($devicePhotos as $photo) {
+            $filePath = __DIR__ . '/../' . $photo['file_path'];
+            if (file_exists($filePath) && is_file($filePath)) {
+                @unlink($filePath);
+            }
+        }
+
+        // 2. Get and delete medical reports from requests
+        $reqStmt = $pdo->prepare("SELECT medical_doc_path FROM requests WHERE device_id = ?");
+        $reqStmt->execute([$entityId]);
+        $requests = $reqStmt->fetchAll();
+        foreach ($requests as $req) {
+            $repPath = __DIR__ . '/../' . $req['medical_doc_path'];
+            if (file_exists($repPath) && is_file($repPath)) {
+                @unlink($repPath);
+            }
+        }
+
+        // 3. Delete device from DB
+        $stmt = $pdo->prepare("DELETE FROM devices WHERE id = ?");
+        $stmt->execute([$entityId]);
     } elseif ($action === 'approve_request') {
         $stmt = $pdo->prepare("UPDATE requests SET status='approved', admin_reviewed_by=?, admin_reviewed_at=NOW() WHERE id=?");
         $stmt->execute([$adminId, $entityId]);
@@ -99,7 +125,9 @@ try {
         }
     }
 
-    if ($isDeviceAction) {
+    if ($action === 'delete_device') {
+        redirect('listings.php?msg=' . urlencode('تم حذف الجهاز بنجاح'));
+    } elseif ($isDeviceAction) {
         redirect('listings.php?msg=' . urlencode('تم تحديث حالة الجهاز بنجاح'));
     } else {
         redirect('requests.php?msg=' . urlencode('تم تحديث حالة الطلب بنجاح'));

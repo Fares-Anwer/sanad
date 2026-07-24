@@ -43,10 +43,24 @@ function initMapPicker() {
   if (typeof L === 'undefined') return showManualCoords(latInput, lngInput);
 
   try {
-    var map = L.map(picker, { center: [15.5527, 48.5164], zoom: 6, zoomControl: true });
+    var initialLat = parseFloat(picker.dataset.lat) || 15.5527;
+    var initialLng = parseFloat(picker.dataset.lng) || 48.5164;
+    var initialZoom = picker.dataset.lat && picker.dataset.lng ? 14 : 6;
+
+    var map = L.map(picker, { center: [initialLat, initialLng], zoom: initialZoom, zoomControl: true });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
 
     var marker = null;
+    if (picker.dataset.lat && picker.dataset.lng) {
+      marker = L.marker([initialLat, initialLng], { draggable: true }).addTo(map);
+      latInput.value = initialLat.toFixed(6);
+      lngInput.value = initialLng.toFixed(6);
+      marker.on('dragend', function() {
+        latInput.value = marker.getLatLng().lat.toFixed(6);
+        lngInput.value = marker.getLatLng().lng.toFixed(6);
+      });
+    }
+
     map.on('click', function(e) {
       placeMarker(e.latlng.lat, e.latlng.lng);
     });
