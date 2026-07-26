@@ -148,6 +148,7 @@ $statusClasses = [
                     <input type="text" name="rejection_reason" required placeholder="سبب الرفض" class="border rounded px-2 py-1 text-sm">
                     <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition min-h-[44px]">رفض</button>
                   </form>
+                  <a href="../edit-device.php?id=<?= $device['id'] ?>" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition min-h-[44px] flex items-center justify-center">تعديل</a>
                 </div>
               </td>
             </tr>
@@ -172,6 +173,7 @@ $statusClasses = [
             <th class="pb-3 font-semibold text-text-muted">التصنيف</th>
             <th class="pb-3 font-semibold text-text-muted">الحالة</th>
             <th class="pb-3 font-semibold text-text-muted">تاريخ الإضافة</th>
+            <th class="pb-3 font-semibold text-text-muted">إجراءات</th>
           </tr>
         </thead>
         <tbody>
@@ -186,6 +188,12 @@ $statusClasses = [
                 </span>
               </td>
               <td class="py-3 text-text-muted text-sm"><?= date('Y-m-d', strtotime($device['created_at'])) ?></td>
+              <td class="py-3">
+                <div class="flex gap-2">
+                  <a href="../device.php?id=<?= $device['id'] ?>" class="text-primary hover:text-primary-dark font-semibold text-sm">عرض</a>
+                  <a href="../edit-device.php?id=<?= $device['id'] ?>" class="text-amber-600 hover:text-amber-800 font-semibold text-sm">تعديل</a>
+                </div>
+              </td>
             </tr>
           <?php endforeach; ?>
         </tbody>

@@ -4,8 +4,9 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/auth.php';
 $csrf = generateCSRFToken();
-$isBeneficiary = isLoggedIn() && getCurrentUser()['role'] === 'beneficiary';
-$isAdmin = isLoggedIn() && getCurrentUser()['role'] === 'admin';
+$currentUser = isLoggedIn() ? getCurrentUser() : null;
+$isBeneficiary = $currentUser && $currentUser['role'] === 'beneficiary';
+$isAdmin = $currentUser && $currentUser['role'] === 'admin';
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $stmt = $pdo->prepare("SELECT d.*, u.full_name AS donor_name, u.phone AS donor_phone, u.governorate AS donor_governorate
@@ -14,6 +15,9 @@ $stmt = $pdo->prepare("SELECT d.*, u.full_name AS donor_name, u.phone AS donor_p
   WHERE d.id = ?");
 $stmt->execute([$id]);
 $device = $stmt->fetch();
+
+$isOwner = $currentUser && $device && $device['donor_id'] == $currentUser['id'];
+$canEdit = $isAdmin || $isOwner;
 
 if (!$device) {
   ?><!DOCTYPE html>
@@ -228,6 +232,9 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
           <?php endif; ?>
           <?php if ($isBeneficiary && $device['status'] !== 'active'): ?>
             <button disabled class="block w-full text-center bg-gray-300 text-gray-500 py-3 rounded-xl font-semibold cursor-not-allowed min-h-[44px]">الجهاز غير متاح حالياً</button>
+          <?php endif; ?>
+          <?php if ($canEdit): ?>
+            <a href="edit-device.php?id=<?= $device['id'] ?>" class="block text-center bg-amber-500 hover:bg-amber-600 text-white py-3 rounded-xl font-semibold transition-all shadow-lg min-h-[44px] flex items-center justify-center">تعديل معلومات الجهاز</a>
           <?php endif; ?>
           <?php if ($isAdmin): ?>
             <form method="POST" action="admin/action.php" onsubmit="return confirm('هل أنت متأكد من رغبتك في حذف هذا الجهاز نهائياً؟ لا يمكن التراجع عن هذا الإجراء.');">

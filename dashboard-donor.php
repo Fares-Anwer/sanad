@@ -131,9 +131,14 @@ $statusClasses = [
                 <?= ($device['status'] === 'rejected' && $device['rejection_reason']) ? htmlspecialchars($device['rejection_reason']) : '—' ?>
               </td>
               <td class="py-3">
-                <?php if ($device['status'] === 'active'): ?>
-                  <a href="device.php?id=<?= $device['id'] ?>" class="text-primary hover:text-primary-dark font-semibold text-sm">عرض في السوق</a>
-                <?php endif; ?>
+                <div class="flex gap-3">
+                  <?php if ($device['status'] === 'active'): ?>
+                    <a href="device.php?id=<?= $device['id'] ?>" class="text-primary hover:text-primary-dark font-semibold text-sm">عرض</a>
+                  <?php else: ?>
+                    <a href="device.php?id=<?= $device['id'] ?>" class="text-gray-500 hover:text-gray-700 font-semibold text-sm">تفاصيل</a>
+                  <?php endif; ?>
+                  <a href="edit-device.php?id=<?= $device['id'] ?>" class="text-amber-600 hover:text-amber-800 font-semibold text-sm">تعديل</a>
+                </div>
               </td>
             </tr>
           <?php endforeach; ?>
