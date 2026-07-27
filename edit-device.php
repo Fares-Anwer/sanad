@@ -558,7 +558,7 @@ $photos = $photoStmt->fetchAll();
 </script>
 <script src="assets/js/main.js"></script>
 <script src="<?= LEAFLET_JS ?>"></script>
-<script src="assets/js/maps.js"></script>
+<script src="assets/js/maps.js?v=<?= time() ?>"></script>
 <script src="assets/js/validation.js"></script>
 </body>
 </html>

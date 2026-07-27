@@ -186,7 +186,7 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
       <div class="glass rounded-2xl p-6 fade-in">
         <h2 class="text-xl font-bold mb-4">الموقع</h2>
         <p class="text-text-muted mb-4">📍 <?= htmlspecialchars($govName) ?>، <?= htmlspecialchars($device['district']) ?></p>
-        <div id="map" class="w-full h-64 rounded-xl bg-gray-100" data-lat="<?= $device['latitude'] ?>" data-lng="<?= $device['longitude'] ?>"></div>
+        <div id="map" class="w-full h-64 rounded-xl bg-gray-100" data-lat="<?= $device['latitude'] ?>" data-lng="<?= $device['longitude'] ?>" data-title="<?= htmlspecialchars($device['name']) ?>"></div>
       </div>
     </div>
 
@@ -256,7 +256,7 @@ $primaryImgSrc = $mainPhoto ?: 'assets/images/placeholder-device.svg';
     function switchPhoto(src) { mainPhoto.src = src; }
   </script>
   <script src="<?= LEAFLET_JS ?>"></script>
-  <script src="assets/js/maps.js"></script>
+  <script src="assets/js/maps.js?v=<?= time() ?>"></script>
 
 <!-- Toast -->
 <div id="toast" role="alert" aria-live="polite" class="fixed bottom-6 right-6 z-50 hidden bg-green-50 text-green-700 border border-green-200 px-6 py-4 rounded-xl shadow-lg fade-in"></div>
